@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PTA会長会 議事録＆AI精度レポートポータル</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f2f0ec;color:#1a1a1a;line-height:1.6;-webkit-text-size-adjust:100%}
+.page{max-width:960px;margin:0 auto;padding:2rem 1.125rem 5rem}
+
+/* HERO */
+.hero{background:#0f172a;border-radius:18px;padding:2.5rem 2rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:#1e3a5f;opacity:.5}
+.hero-tag{display:inline-block;background:#22c55e;color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;margin-bottom:.875rem}
+.hero h1{font-size:clamp(22px,5vw,32px);font-weight:800;color:#fff;line-height:1.3;margin-bottom:.75rem}
+.hero h1 em{color:#38bdf8;font-style:normal}
+.hero-sub{font-size:13px;color:#94a3b8;line-height:1.7;max-width:640px}
+
+/* SECTION */
+.sec-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#64748b;margin-bottom:1rem;border-bottom:2px solid #e2e8f0;padding-bottom:0.5rem}
+
+/* CARD GRID */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:2rem}
+
+/* REPORTS CARD */
+.report-card{background:#fff;border-radius:14px;border:1px solid #e5e7eb;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:transform 0.2s, box-shadow 0.2s;position:relative}
+.report-card.active:hover{transform:translateY(-4px);box-shadow:0 12px 20px rgba(15,23,42,0.08);cursor:pointer}
+
+.card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column}
+.card-meta{display:flex;justify-content:between;align-items:center;justify-content:space-between;margin-bottom:0.5rem}
+.card-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px}
+.badge-active{background:#e0f2fe;color:#0369a1}
+.badge-pending{background:#f1f5f9;color:#64748b}
+.card-date{font-size:11px;color:#888}
+.card-title{font-size:15px;font-weight:800;color:#0f172a;margin-bottom:1rem}
+
+/* MINI DASHBOARD */
+.mini-dash{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#f8fafc;padding:0.75rem;border-radius:10px;margin-top:auto}
+.dash-item{text-align:center}
+.dash-num{font-size:18px;font-weight:800;line-height:1.2}
+.dash-label{font-size:9px;color:#64748b;margin-top:2px;white-space:nowrap}
+
+/* COLOR VARIATIONS FOR DASHBOARD */
+.c-err{color:#ef4444}.c-mod{color:#f59e0b}.c-add{color:#3b82f6}
+
+/* PENDING CARD STATE */
+.card-pending{opacity:0.6;background:#fafafa}
+.card-pending .card-title{color:#64748b}
+.card-pending .mini-dash{background:#f1f5f9}
+.card-pending .dash-num{color:#94a3b8}
+
+/* FOOTER CLOSING */
+.footer-note{background:#0f172a;border-radius:14px;padding:1.5rem;text-align:center;color:#94a3b8;font-size:12px;margin-top:3rem}
+.footer-note strong{color:#fff}
+
+@media(max-width:480px){
+  .page{padding:1.125rem .875rem 4rem}
+  .hero{padding:1.75rem 1.25rem 1.5rem;border-radius:14px}
+  .card-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="hero-tag">✦ 業務効率化ポータル</div>
+    <h1>定例会 議事録＆<br><em>AI文字起こし 精度検証</em></h1>
+    <p class="hero-sub">Plaud Note PROを活用した自動議事録の精度推移を公開しています。修正データをAIに蓄積させることで、回を追うごとに「PTA専門用語」の誤変換が減っていくプロセスを可視化します。</p>
+  </div>
+
+  <div class="sec-title">年間の議事録カード一覧（全10回予定）</div>
+
+  <div class="card-grid">
+
+    <a href="giji_01.html" class="report-card active">
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-badge badge-active">公開中</span>
+          <span class="card-date">2026/05/22</span>
+        </div>
+        <div class="card-title">第1回 会長会・運営委員会</div>
+        
+        <div class="mini-dash">
+          <div class="dash-item">
+            <div class="dash-num c-err">3</div>
+            <div class="dash-label">要確認(誤り)</div>
+          </div>
+          <div class="dash-item">
+            <div class="dash-num c-mod">5</div>
+            <div class="dash-label">表現の調整</div>
+          </div>
+          <div class="dash-item">
+            <div class="dash-num c-add">4</div>
+            <div class="dash-label">情報の追加</div>
+          </div>
+        </div>
+      </div>
+    </a>
+
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-badge badge-pending">次回予定</span>
+          <span class="card-date">2026/06/19</span>
+        </div>
+        <div class="card-title">第2回 定例会・運営委員会</div>
+        
+        <div class="mini-dash">
+          <div class="dash-item">
+            <div class="dash-num c-err">-</div>
+            <div class="dash-label">要確認(誤り)</div>
+          </div>
+          <div class="dash-item">
+            <div class="dash-num c-mod">-</div>
+            <div class="dash-label">表現の調整</div>
+          </div>
+          <div class="dash-item">
+            <div class="dash-num c-add">-</div>
+            <div class="dash-label">情報の追加</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第3回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第4回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第5回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第6回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第7回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第8回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第9回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="report-card card-pending">
+      <div class="card-body">
+        <div class="card-meta"><span class="card-badge badge-pending">未開催</span><span class="card-date">時期未定</span></div>
+        <div class="card-title">第10回 定例会・運営委員会</div>
+        <div class="mini-dash">
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">要確認</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">表現調整</div></div>
+          <div class="dash-item"><div class="dash-num">-</div><div class="dash-label">情報追加</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-note">
+    <p>単Pの負担を、みんなで軽くしていきましょう。 <strong>AIツール推進チーム</strong></p>
+  </div>
+
+</div>
+</body>
+</html>
