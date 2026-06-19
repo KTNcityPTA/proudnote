@@ -101,6 +101,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","N
 .col-after{background:#f0fdf7}.col-after .col-label{color:#059669}.col-after .col-val{color:#064e3b}
 .diff-note{padding:.6rem 1rem;font-size:11px;color:#666;background:#fafafa;border-top:1px solid #f0f0f0;line-height:1.5}
 
+/* LEGEND */
+.legend-box{display:flex;flex-wrap:wrap;gap:8px 16px;background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:.625rem 1rem;margin-bottom:.75rem}
+.legend-item{display:flex;align-items:center;gap:4px}
+.lg-icon{font-size:12px;font-weight:800}
+.lg-text{font-size:11px;font-weight:600}
+.lg-del,.lg-del-text{color:#b91c1c}
+.lg-fix,.lg-fix-text{color:#059669}
+.lg-add,.lg-add-text{color:#1d4ed8}
+.lg-move,.lg-move-text{color:#7c3aed}
+/* INLINE DIFF */
+.d-del{color:#b91c1c;font-weight:700;background:#fee2e2;border-radius:3px;padding:0 3px}
+.d-fix{color:#059669;font-weight:700;background:#dcfce7;border-radius:3px;padding:0 3px}
+.d-add{color:#1d4ed8;font-weight:600;background:#dbeafe;border-radius:3px;padding:0 3px}
+.d-move{display:inline-block;color:#7c3aed;font-size:10px;font-weight:700;background:#ede9fe;border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:middle}
 /* MINUTES TOGGLE */
 .tab-row{display:flex;gap:6px;margin-bottom:1rem}
 .tab-btn{flex:1;background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:.6rem .75rem;font-size:12px;font-weight:600;color:#666;cursor:pointer;font-family:inherit;transition:all .2s}
@@ -408,30 +422,43 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","N
   </div>
 </div>
 
-<!-- ⑥ 実際の議事録（切り替え表示） -->
+<!-- ⑥ 実際の議事録（インライン差分） -->
 <div class="sec">
   <div class="sec-title">実際の議事録を見る</div>
-  <div class="tab-row">
-    <button class="tab-btn active" onclick="showMin('raw',this)">無修正版（AI自動）</button>
-    <button class="tab-btn" onclick="showMin('fixed',this)">修正版</button>
+
+  <div class="legend-box">
+    <div class="legend-item"><span class="lg-icon lg-del">×</span><span class="lg-text lg-del-text">修正前（誤り）</span></div>
+    <div class="legend-item"><span class="lg-icon lg-fix">○</span><span class="lg-text lg-fix-text">修正後</span></div>
+    <div class="legend-item"><span class="lg-icon lg-add">＋</span><span class="lg-text lg-add-text">追記</span></div>
+    <div class="legend-item"><span class="lg-icon lg-move">↕</span><span class="lg-text lg-move-text">位置を移動</span></div>
   </div>
 
-  <div class="minutes-box show" id="min-raw">
+  <div class="minutes-box show">
     <div class="min-h1">■ PTA運営・組織体制</div>
 
     <div class="min-item">
+      <div class="min-item-title"><span class="d-move">↕ 冒頭へ移動</span>初回「会長会」のためのアイスブレイク</div>
+      <div class="min-item-body">初回会長会を開催し、関係構築のため「共通点探し」を実施。各ブロックで複数の共通点が見つかり、目的は達成された。次回以降は<span class="d-del">×課長陣</span>→<span class="d-fix">○会長陣</span>からの持ち込み企画を取り入れる方針。</div>
+    </div>
+
+    <div class="min-item">
       <div class="min-item-title">出向委員会の担当者割り当て方針の変更</div>
-      <div class="min-item-body">これまで会長の負担が大きかったため、今年度は役員中心で出向委員会に参加する体制に試行的に変更。不要な委員会は整理し、残った6つの委員会で担当者を割り振る方針で合意された。</div>
+      <div class="min-item-body">これまで単Ｐ会長の負担が大きかったため、今年度は役員中心で出向委員会に参加する体制に試行的に変更。不要な委員会は整理し、残った6つの委員会で担当者を割り振る方針で合意された。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title"><span class="d-move">↕ 運営体制へ移動</span>各種委員会の担当者</div>
+      <div class="min-item-body">放課後児童会運営委員会: お子さんが児童会を利用している保護者<span class="d-del">×1名</span>→<span class="d-fix">○2名</span>が担当決定。<br>給食委員会: これまで副会長から選任された4人が毎月参加していたが、<span class="d-add">＋毎月2回と判明し</span>、負担軽減のため希望者が参加できる方式に変更。</div>
     </div>
 
     <div class="min-item">
       <div class="min-item-title">情報共有方法の変更</div>
-      <div class="min-item-body">会長経由では情報が伝わらないケースがあったため、CP役員から各学校の副会長へ、公式LINEを通じて会長会の資料などを直接共有する方式に変更することが承認された。</div>
+      <div class="min-item-body">会長経由では情報が伝わらないケースがあったため、<span class="d-del">×CP役員</span>→<span class="d-fix">○市P役員</span>から各学校の副会長へ、<span class="d-del">×公式LINE</span>→<span class="d-fix">○市P公式LINE</span>を通じて会長会の資料などを直接共有する方式に変更することが承認された。</div>
     </div>
 
     <div class="min-item">
       <div class="min-item-title">Google 共有ドライブの導入・運用</div>
-      <div class="min-item-body">全国PTAから提供される無償のGoogle Workspaceを活用し、個人アカウントへの紐付きや引き継ぎの問題を解消する「共有ドライブ」の利用を促進。</div>
+      <div class="min-item-body"><span class="d-del">×全国PTAから提供される無償の</span>→<span class="d-fix">○全国PTA連絡協議会から無償提供を受けている有料の</span>Google Workspaceを活用し、個人アカウントへの紐付きや引き継ぎの問題を解消する「共有ドライブ」の利用を促進。学校ごとに配布された専用ドメインで登録可能で、手順資料も提供。</div>
     </div>
 
     <div class="min-item">
@@ -441,14 +468,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","N
 
     <div class="min-item">
       <div class="min-item-title">学校運営協議会（CS）へのPTA参画推進</div>
-      <div class="min-item-body">CSの目的・権限が<span class="hl-err">形骸化している懸念</span>があり、特にPTAが参画していない3ブロックに対し参画のメリットを説明し後押しする方針。</div>
+      <div class="min-item-body">CSの目的・権限が<span class="d-del">×形骸化している懸念</span>→<span class="d-fix">○有意義に活かされていない懸念</span>があり、特にPTAが参画していない<span class="d-add">＋第</span>3ブロックに対し、参画のメリットを説明し後押ししていく方針。</div>
     </div>
 
     <div class="min-h1">■ 予算・配分</div>
 
     <div class="min-item">
       <div class="min-item-title">保育サポート事業の活用促進</div>
-      <div class="min-item-body">交野市の未就学児見守りスタッフ費用補助（<span class="hl-err">1回約7万円</span>）の活用を促進。昨年度は約5万円を返還しており、未使用が続くと減額の懸念がある。</div>
+      <div class="min-item-body">交野市の未就学児見守りスタッフ費用補助（<span class="d-del">×1回約7万円</span>→<span class="d-fix">○1回約6千円</span>）の活用を促進。昨年度は約5万円を返還しており、未使用が続くと減額の懸念がある。<span class="d-add">＋各PTAで年6〜7万円程度の予算計上を推奨。</span></div>
     </div>
 
     <div class="min-item">
@@ -459,116 +486,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","N
     <div class="min-h1">■ イベント・企画</div>
 
     <div class="min-item">
-      <div class="min-item-title">初回「会長会」とアイスブレイク</div>
-      <div class="min-item-body">初回会長会を開催し、関係構築のためアイスブレイク「共通点探し」を実施。次回以降は<span class="hl-err">課長陣</span>からの持ち込み企画を取り入れる方針。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">各種委員会の担当者</div>
-      <div class="min-item-body">放課後児童会運営委員会: お子さんが児童会を利用している保護者<span class="hl-err">1名</span>が担当決定。<br>給食委員会: これまで副会長が毎月参加していたが、負担軽減のため希望者が参加できる方式に変更。</div>
-    </div>
-
-    <div class="min-item">
       <div class="min-item-title">夢教育プロジェクト</div>
-      <div class="min-item-body">子どもたちの「夢の持ち方・叶え方」を育む教育プログラム。デモの結果、メインターゲットを中学生・高学年に絞る方向。<br>第1回: 7月18日(月・祝) 13時〜17時、親子参加型ワークショップ。</div>
+      <div class="min-item-body">子どもたちの「夢の持ち方・叶え方」を育む教育プログラム。<span class="d-del">×デモの結果、メインターゲットを</span>→<span class="d-fix">○副会長の杉田氏が別団体でデモを実施し、その結果を受けてメインターゲットを</span>中学生・高学年に絞る方向。<br>第1回: 7月18日(月・祝) 13時〜17時、<span class="d-add">＋ゆうゆうセンターにて</span>親子参加型ワークショップ。</div>
     </div>
 
     <div class="min-item">
       <div class="min-item-title">防災キャンプ企画</div>
-      <div class="min-item-body">過去に好評だった防災キャンプを再提案。自助・共助の重要性を体験的に学ぶ。</div>
+      <div class="min-item-body">過去に<span class="d-add">＋岩船小学校PTAで</span>好評だった防災キャンプを再提案。自助・共助の重要性を体験的に学ぶ。<span class="d-add">＋実施校には市Pから手厚い支援を行う。</span></div>
     </div>
 
     <div class="min-item">
-      <div class="min-item-title">夏祭り（天の川・<span class="hl-err">中川祭り</span>）</div>
-      <div class="min-item-body">7月25日に開催。有志活動として尾崎さんが中心となり進める。</div>
+      <div class="min-item-title">夏祭り（天の川・<span class="d-del">×中川祭り</span>→<span class="d-fix">○七夕祭り</span>）</div>
+      <div class="min-item-body">7月25日に開催。有志活動として尾崎さんが中心となり進める。<span class="d-add">＋出店内容はたこせん、スマートボールに加え回転の速いゲーム（輪投げなど）を追加検討。</span></div>
     </div>
 
     <div class="min-item">
       <div class="min-item-title">AED講習会の位置づけ見直し</div>
-      <div class="min-item-body">「選べる活動メニュー」の一つとして再周知する方針。</div>
+      <div class="min-item-body">「選べる活動メニュー」の一つとして再周知する方針。<span class="d-add">＋各校の意欲や状況に応じて選択できる体制へ。</span></div>
     </div>
-  </div>
-
-  <div class="minutes-box" id="min-fixed">
-    <div class="min-h1">■ PTA運営・組織体制</div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 初回「会長会」のためのアイスブレイク <span class="min-note">位置を修正</span></div>
-      <div class="min-item-body">初回会長会を開催し、関係構築のため「共通点探し」を実施。各ブロックで複数の共通点が見つかり、目的は達成された。次回以降は<span class="hl-fix">会長陣</span>からの持ち込み企画を取り入れる方針。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 出向委員会の担当者割り当て方針の変更</div>
-      <div class="min-item-body">これまで単Ｐ会長の負担が大きかったため、今年度は役員中心で出向委員会に参加する体制に試行的に変更。不要な委員会は整理し、残った6つの委員会で担当者を割り振る方針で合意された。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 各種委員会の担当者 <span class="min-note">位置を修正</span></div>
-      <div class="min-item-body">放課後児童会運営委員会: お子さんが児童会を利用している保護者<span class="hl-fix">2名</span>が担当決定。<br>給食委員会: これまで副会長から選任された4人が<span class="hl-add">毎月2回</span>参加していたが、負担軽減のため希望者が参加できる方式に変更。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 情報共有方法の変更</div>
-      <div class="min-item-body">会長経由では情報が伝わらないケースがあったため、<span class="hl-add">市P</span>役員から各学校の副会長へ、<span class="hl-add">市P公式LINE</span>を通じて会長会の資料などを直接共有する方式に変更することが承認された。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● Google 共有ドライブの導入・運用</div>
-      <div class="min-item-body"><span class="hl-add">全国PTA連絡協議会</span>から無償提供を受けている有料のGoogle Workspaceを活用し、「共有ドライブ」の利用を促進。学校ごとに配布された専用ドメインで登録可能で、手順資料も提供。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 学校運営協議会（CS）へのPTA参画推進</div>
-      <div class="min-item-body">CSの目的・権限が<span class="hl-fix">有意義に活かされていない懸念</span>があり、特にPTAが参画していない第3ブロックに対し、参画のメリットを説明し後押ししていく方針。</div>
-    </div>
-
-    <div class="min-h1">■ 予算・配分</div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 保育サポート事業の活用促進</div>
-      <div class="min-item-body">PTA活動時の保育費用補助（<span class="hl-fix">1回約6千円</span>）の活用を促進。昨年度は補助金を約5万円余らせ、交野市に返還しており、未使用が続くと減額の懸念がある。各PTAで年6〜7万円程度の予算計上を推奨。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 保育サポート費の配分基準</div>
-      <div class="min-item-body">本年度は「人数割（児童数・生徒数）×係数」で配分し、中学校のみ係数0.5を適用する方式で実施することが決定。</div>
-    </div>
-
-    <div class="min-h1">■ イベント・企画</div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 夢教育プロジェクト</div>
-      <div class="min-item-body">子どもたちの「夢の持ち方・叶え方」を育む教育プログラム。副会長の杉田氏が<span class="hl-add">別団体でデモを実施し、その結果を受けて</span>、メインターゲットを中学生・高学年に絞る方向で検討。<br>第1回: 7月18日(月・祝) 13時〜17時 ゆうゆうセンターにて親子参加型ワークショップ。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 防災キャンプ企画</div>
-      <div class="min-item-body">過去に<span class="hl-add">岩船小学校PTAで</span>好評だった防災キャンプを再提案。自助・共助の重要性を体験的に学ぶ。実施校には市Pから手厚い支援を行う。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● 夏祭り（天の川・<span class="hl-fix">七夕祭り</span>）</div>
-      <div class="min-item-body">7月25日に開催。有志活動として尾崎さんが中心となり進める。出店内容はたこせん、スマートボールに加え回転の速いゲーム（輪投げなど）を追加検討。</div>
-    </div>
-
-    <div class="min-item">
-      <div class="min-item-title">● AED講習会の位置づけ見直し</div>
-      <div class="min-item-body">「選べる活動メニュー」の一つとして再周知する方針。各校の意欲や状況に応じて選択できる体制へ。</div>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:12px;margin-top:.5rem;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:5px"><span style="background:#fef08a;padding:1px 7px;border-radius:3px;font-size:11px">黄色</span><span style="font-size:11px;color:#666">無修正版の誤り</span></div>
-    <div style="display:flex;align-items:center;gap:5px"><span style="background:#bbf7d0;padding:1px 7px;border-radius:3px;font-size:11px">緑</span><span style="font-size:11px;color:#666">修正した箇所</span></div>
-    <div style="display:flex;align-items:center;gap:5px"><span style="background:#bfdbfe;padding:1px 7px;border-radius:3px;font-size:11px">青</span><span style="font-size:11px;color:#666">追加・補足した箇所</span></div>
   </div>
 </div>
 
 <!-- ⑦ プロモ→スライド→締め -->
 <div class="sec">
   <div class="promo-copy">
-    <h3>プラウドノートPROで作った議事録を<br>いただければ、こんな保護者向け概要に作り替えます ✦</h3>
-    <p>読みやすい・伝わる・共有しやすい。<br>Claudeに渡して、「配布用の概要版ビジュアル資料にして！」と言っていただくだけで、会議の内容が一瞬でビジュアル資料に変わります。<br>議事録作成から配布まで、まるごと時短。</p>
+    <h3>プラウドノートPROで作った議事録を<br>Claude等AIに渡せば、こんな保護者向け概要に作り替えます ✦</h3>
+    <p>読みやすい・伝わる・共有しやすい。<br>AIに「配布用の概要版ビジュアル資料にして！」と言っていただくだけで、会議の内容が一瞬でビジュアル資料に変わります。<br>議事録作成から配布まで、まるごと時短。</p>
   </div>
 
   <div class="slide-sec-label">↓ 実際にこんな資料ができます</div>
@@ -635,8 +578,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","N
 <div class="closing">
   <div class="closing-icon">🤝</div>
   <h3>単Pの負担を、みんなで軽くしていきましょう</h3>
-  <p>録音して、AIに渡して、数か所確認するだけ。その積み重ねが、会長・副会長・委員のみなさんの時間と心の余裕につながります。<br><br>一緒に、もっとラクな運営のかたちを考えていきましょう！！</p>
-</div>
+
 
 </div>
 <script>
