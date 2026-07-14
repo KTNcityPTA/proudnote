@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第2回 会長会 議事録＆AI精度レポート</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f2f0ec;color:#1a1a1a;line-height:1.6;-webkit-text-size-adjust:100%}
+.page{max-width:680px;margin:0 auto;padding:2rem 1.125rem 5rem}
+
+/* HERO */
+.hero{background:#0f172a;border-radius:18px;padding:2.25rem 1.75rem 2rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:#1e3a5f;opacity:.5}
+.hero-tag{display:inline-block;background:#22c55e;color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;margin-bottom:.875rem}
+.hero h1{font-size:clamp(22px,5.5vw,32px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:.75rem}
+.hero h1 em{color:#38bdf8;font-style:normal}
+.hero-sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #1e3a5f}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;background:#1e293b;color:#94a3b8;font-size:11px;padding:5px 10px;border-radius:999px;border:1px solid #334155}
+.hero-chip strong{color:#e2e8f0;font-weight:600}
+
+/* SECTION */
+.sec{margin-top:2rem}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:.75rem}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column}
+.flow-row{display:flex;gap:0;align-items:stretch}
+.flow-line{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0}
+.f-dot{width:28px;height:28px;border-radius:50%;background:#0f172a;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.f-bar{flex:1;width:2px;background:#e5e7eb;margin:4px 0}
+.flow-row:last-child .f-bar{display:none}
+.flow-body{flex:1;padding:.75rem 0 .875rem}
+.f-title{font-size:13px;font-weight:700;color:#111}
+.f-sub{font-size:12px;color:#888;margin-top:2px;line-height:1.5}
+.f-badge{display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:5px}
+
+/* ACCORDION */
+.accord{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:10px}
+.accord-head{width:100%;background:none;border:none;padding:.875rem 1rem;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left;font-family:inherit}
+.accord-head:hover{background:#f9fafb}
+.accord-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.accord-label{flex:1}
+.accord-title{font-size:13px;font-weight:700;color:#111}
+.accord-hint{font-size:11px;color:#888;margin-top:2px}
+.accord-chev{font-size:16px;color:#aaa;transition:transform .25s;flex-shrink:0;font-style:normal}
+.accord-head[aria-expanded="true"] .accord-chev{transform:rotate(180deg)}
+.accord-body{display:none;border-top:1px solid #f0f0f0;padding:1rem}
+.accord-body.open{display:block}
+
+/* ACCURACY */
+.acc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.acc-card{background:#fff;border-radius:10px;padding:.875rem .75rem;text-align:center;border:1px solid #e5e7eb}
+.acc-n{font-size:26px;font-weight:800;line-height:1}
+.acc-l{font-size:11px;color:#888;margin-top:3px}
+.trend{font-size:11px;margin-top:6px;padding:2px 8px;border-radius:999px;display:inline-block;font-weight:600}
+.t-red{background:#fee2e2;color:#b91c1c}
+.t-amber{background:#fef3c7;color:#92400e}
+.t-blue{background:#dbeafe;color:#1d4ed8}
+
+/* DIFF CARD (report accordion) */
+.diff-card{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;border:1px solid #e5e7eb}
+.diff-head{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-bottom:1px solid #f0f0f0}
+.badge-diff{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;flex-shrink:0}
+.badge-err{background:#fee2e2;color:#b91c1c}
+.badge-mod{background:#fef3c7;color:#92400e}
+.badge-add{background:#dbeafe;color:#1d4ed8}
+.diff-label{font-size:13px;font-weight:600;color:#111}
+.diff-compare{display:grid;grid-template-columns:1fr 1fr}
+.diff-col{padding:.75rem 1rem;font-size:13px;line-height:1.5}
+.diff-col-l{border-right:1px solid #f0f0f0}
+.col-label{font-size:10px;font-weight:700;letter-spacing:.03em;margin-bottom:4px}
+.col-before{background:#fffafa}.col-before .col-label{color:#b91c1c}.col-before .col-val{color:#7f1d1d;text-decoration:line-through;text-decoration-color:#fca5a5}
+.col-after{background:#f0fdf7}.col-after .col-label{color:#059669}.col-after .col-val{color:#064e3b}
+.diff-note{padding:.6rem 1rem;font-size:11px;color:#666;background:#fafafa;border-top:1px solid #f0f0f0;line-height:1.5}
+
+/* LEGEND + INLINE DIFF */
+.legend-box{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.875rem 1rem;display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:6px}
+.lg-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.lg-text{font-size:11px;color:#666}
+.lg-del{background:#fee2e2;color:#b91c1c}
+.lg-fix{background:#dcfce7;color:#15803d}
+.lg-add{background:#dbeafe;color:#1d4ed8}
+.lg-move{background:#ede9fe;color:#6d28d9}
+
+.d-del{background:#fee2e2;color:#b91c1c;border-radius:3px;padding:0 3px;text-decoration:line-through;text-decoration-color:#f87171}
+.d-fix{background:#dcfce7;color:#15803d;border-radius:3px;padding:0 3px;font-weight:600}
+.d-add{background:#dbeafe;color:#1d4ed8;border-radius:3px;padding:0 3px;font-weight:600}
+.d-move{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;margin-right:6px;vertical-align:middle}
+
+/* MINUTES */
+.minutes-box{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:1.25rem}
+.min-h1{font-size:13px;font-weight:700;color:#111;margin:1.25rem 0 .5rem;padding-bottom:4px;border-bottom:2px solid #e5e7eb}
+.min-h1:first-child{margin-top:0}
+.min-item{margin-bottom:.875rem}
+.min-item-title{font-size:13px;font-weight:700;color:#111;margin-bottom:2px}
+.min-item-body{font-size:13px;color:#444;line-height:1.85}
+
+/* PROMO COPY */
+.promo-copy{background:#0f172a;border-radius:14px;padding:1.5rem 1.375rem;margin-bottom:1rem}
+.promo-copy h3{font-size:clamp(14px,3.5vw,17px);font-weight:800;color:#fff;line-height:1.5;margin-bottom:.625rem}
+.promo-copy p{font-size:13px;color:#94a3b8;line-height:1.7}
+.slide-sec-label{text-align:center;font-size:12px;color:#888;margin-bottom:.75rem;letter-spacing:.04em}
+
+/* SLIDE — WHITE BASE */
+.slide-wrap{background:#f8fafc;border-radius:16px;overflow:hidden;margin-top:.75rem;border:1px solid #e2e8f0}
+.slide-inner{padding:1.5rem;display:flex;flex-direction:column;gap:10px}
+.slide-kv{background:#0ea5e9;border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.slide-kv::after{content:'📋';position:absolute;right:16px;bottom:-4px;font-size:52px;opacity:.2}
+.slide-kv h2{font-size:clamp(16px,4vw,22px);font-weight:800;color:#fff;line-height:1.3;margin-bottom:.5rem}
+.slide-kv p{font-size:11px;color:#bae6fd;line-height:1.5}
+.slide-date{font-size:10px;background:rgba(255,255,255,.25);color:#fff;padding:2px 10px;border-radius:999px;display:inline-block;margin-top:.5rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.info-card-title{font-size:10px;color:#94a3b8;margin-bottom:.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.info-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px}
+.info-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot-green{background:#22c55e}.dot-amber{background:#f59e0b}.dot-blue{background:#3b82f6}
+.info-text{font-size:12px;color:#374151;line-height:1.45}
+.event-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.event-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:8px;flex-wrap:wrap}
+.event-name{font-size:13px;font-weight:700;color:#111}
+.event-date-badge{font-size:10px;font-weight:700;background:#0ea5e9;color:#fff;padding:2px 9px;border-radius:999px}
+.event-desc{font-size:12px;color:#4b5563;line-height:1.55}
+.action-list{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.action-title{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.action-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.action-item:last-child{margin-bottom:0}
+.check-box{width:15px;height:15px;border-radius:3px;border:1.5px solid #d1d5db;flex-shrink:0;margin-top:2px}
+.action-text{font-size:12px;color:#374151;line-height:1.45}
+
+/* CLOSING */
+.closing{background:#0f172a;border-radius:14px;padding:1.75rem 1.5rem;margin-top:1.5rem;text-align:center}
+.closing-icon{font-size:32px;margin-bottom:.75rem}
+.closing h3{font-size:clamp(15px,4vw,19px);font-weight:800;color:#fff;line-height:1.4;margin-bottom:.75rem}
+.closing p{font-size:13px;color:#94a3b8;line-height:1.75}
+
+@media(max-width:480px){
+  .page{padding:1.125rem .875rem 4rem}
+  .hero{padding:1.75rem 1.25rem 1.5rem;border-radius:14px}
+  .acc-row{gap:7px}
+  .info-grid{grid-template-columns:1fr}
+  .diff-compare{grid-template-columns:1fr}
+  .diff-col-l{border-right:none;border-bottom:1px solid #f0f0f0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ AI議事録 精度レポート</div>
+  <h1>第2回 会長会<br><em>議事録＆AI精度レポート</em></h1>
+  <p class="hero-sub">Plaud Note PROで録音した自動議事録（無修正版）と、単語・話者を直した最終版との差分を公開します。修正を積み重ねるほど、PTA専門用語や固有名詞の誤変換は減っていきます。</p>
+  <div class="hero-meta">
+    <div class="hero-chip">📅 <strong>2026年6月19日</strong></div>
+    <div class="hero-chip">📍 <strong>ゆうゆうセンター</strong></div>
+    <div class="hero-chip">👥 <strong>参加18名</strong></div>
+  </div>
+</div>
+
+<!-- ① 使い方フロー -->
+<div class="sec">
+  <div class="sec-title">おすすめの使い方</div>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">1</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">会議を録音</div>
+        <div class="f-sub">テーブルに置いてワンタッチでスタート。話者名を事前登録しておくとより精度UP。</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">2</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">アプリで文字起こし・議事録生成</div>
+        <div class="f-sub">録音データを転送するだけで、AIが自動で文字起こし＆要約。</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">3</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">マイページで単語・話者を修正</div>
+        <div class="f-sub">誤変換をその場で直す。この修正がAIの学習データになり、次回から誤りが減っていく。</div>
+        <span class="f-badge">これが精度向上の鍵</span>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">4</div></div>
+      <div class="flow-body">
+        <div class="f-title">数値・固有名詞だけ目視確認して配布</div>
+        <div class="f-sub">金額・人数・学校名・イベント名など事実に関わる部分のみ確認。全文を読み直す必要なし。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 精度レポート -->
+<div class="sec">
+  <div class="sec-title">第2回の議事録 精度レポート</div>
+  <div class="acc-row">
+    <div class="acc-card"><div class="acc-n" style="color:#ef4444">4</div><div class="acc-l">要確認の誤り</div><span class="trend t-red">固有名詞</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#f59e0b">4</div><div class="acc-l">表現・構造の差</div><span class="trend t-amber">整理・移動</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#3b82f6">4</div><div class="acc-l">情報の追加</div><span class="trend t-blue">補足・詳細化</span></div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fee2e2">⚠️</div>
+      <div class="accord-label">
+        <div class="accord-title">要確認の誤り（4件）</div>
+        <div class="accord-hint">傾向：今回はすべて固有名詞（学校名・会場名・イベント名）</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">学校名</span><span class="diff-label">会長トークタイムの発表校</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">藤川小学校</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">藤が尾小学校</div></div>
+        </div>
+        <div class="diff-note">「ふじがお」を「ふじかわ」と誤変換（2カ所）。単語登録で次回から防げる。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">会場名</span><span class="diff-label">会議・夢プロジェクトの会場</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">遊遊センター</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">ゆうゆうセンター</div></div>
+        </div>
+        <div class="diff-note">ひらがな表記の会場名を漢字に誤変換。会議情報・夢プロジェクトの2カ所。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">学校の取り違え</span><span class="diff-label">PTA組織がない学校</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">幼保連携型認定こども園</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">妙見坂小学校</div></div>
+        </div>
+        <div class="diff-note">対象の特定がまるごと入れ替わる危険なミス。事実に関わるため要チェック。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-err">イベント名</span><span class="diff-label">藤が尾小の地域イベント</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">フジカワサマーフェスタ</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">サマーフェスタ</div></div>
+        </div>
+        <div class="diff-note">学校名の誤変換につられ、接頭辞「フジカワ」を誤って付加。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fef3c7">📝</div>
+      <div class="accord-label">
+        <div class="accord-title">表現・構造の差（4件）</div>
+        <div class="accord-hint">傾向：略称の混在・自動生成の推測・配置</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">略称の混在</span><span class="diff-label">「市P」と「PTA」の使い分け</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">今後のPTAでの取り組み</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">今後の市Ｐでの取り組み</div></div>
+        </div>
+        <div class="diff-note">単Pと市Pを指す略称が混在。文脈に応じて使い分けが必要。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">推測を削除</span><span class="diff-label">「AIによる提案」7項目</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">末尾にAIが未決事項の提案を自動生成</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">議事録本体からは削除</div></div>
+        </div>
+        <div class="diff-note">会議で出ていない推測が混じるため、議事録としては削除。検討メモには使える。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-mod">配置ミス</span><span class="diff-label">にぎわいフェスタの金券配布事例</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">事務連絡欄に配置</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">藤が尾小の活動紹介へ移動</div></div>
+        </div>
+        <div class="diff-note">話題の文脈がずれることがある。電池の注意喚起など議題外の雑談も整理・削除した。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#dbeafe">➕</div>
+      <div class="accord-label">
+        <div class="accord-title">修正版で補われた情報（4件）</div>
+        <div class="accord-hint">傾向：話者名・固有名称・背景情報の欠落</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">追加</span><span class="diff-label">講師名の明記</span></div>
+        <div class="diff-col col-after" style="border-radius:0 0 8px 8px"><div class="col-label">修正版で追加</div><div class="col-val">AED講習を担当した「恒吉講師」</div></div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">追加</span><span class="diff-label">募集の意図を具体化</span></div>
+        <div class="diff-col col-after" style="border-radius:0 0 8px 8px"><div class="col-label">修正版で追加</div><div class="col-val">「子どもの学校給食にとって最適な人選」</div></div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">追加</span><span class="diff-label">背景・場所の明記</span></div>
+        <div class="diff-col col-after" style="border-radius:0 0 8px 8px"><div class="col-label">修正版で追加</div><div class="col-val">「にぎわいフェスタ」「藤が尾小学校の活動紹介」など</div></div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-add">追加</span><span class="diff-label">会議情報の補完</span></div>
+        <div class="diff-col col-after" style="border-radius:0 0 8px 8px"><div class="col-label">修正版で追加</div><div class="col-val">参加18名の実名・日時（19:00〜21:00）・場所</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 実際の議事録（インライン差分） -->
+<div class="sec">
+  <div class="sec-title">実際の議事録を見る</div>
+
+  <div class="legend-box">
+    <div class="legend-item"><span class="lg-icon lg-del">×</span><span class="lg-text">修正前（誤り）</span></div>
+    <div class="legend-item"><span class="lg-icon lg-fix">○</span><span class="lg-text">修正後</span></div>
+    <div class="legend-item"><span class="lg-icon lg-add">＋</span><span class="lg-text">追記・補足</span></div>
+    <div class="legend-item"><span class="lg-icon lg-move">↕</span><span class="lg-text">位置を移動</span></div>
+  </div>
+
+  <div class="minutes-box">
+    <div class="min-h1">■ 防犯・安全</div>
+
+    <div class="min-item">
+      <div class="min-item-title">こども110番の協力依頼</div>
+      <div class="min-item-body">交野市スポーツ青少年課より「こども110番」への協力依頼。黄色の旗を目印に子どもが避難できるセーフティネットとして重要性が強調された。市P関係で1,400件の登録があるが、さらなる拡充と旗の定期交換が課題。PTA組織のない<span class="d-del">×幼保連携型認定こども園</span>→<span class="d-fix">○妙見坂小学校</span>での協力者募集は、市に直接相談・申請する形で対応を検討。今後の<span class="d-del">×PTA</span>→<span class="d-fix">○市Ｐ</span>での取り組みとして、各校共通の啓発ポスター作成を検討する。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">AED／救命講習会の実施</div>
+      <div class="min-item-body"><span class="d-add">＋恒吉</span>講師より心肺蘇生・AEDの重要性を説明。家庭内での心臓突然死が約7割、年間8万〜9万人に上る統計を紹介。講習は90分（基礎）と3時間（シナリオ演習）の選択制で、希望日の1.5〜2ヶ月前に連絡が必要。松浦氏経由でも申込可能。</div>
+    </div>
+
+    <div class="min-h1">■ PTA運営・方針</div>
+
+    <div class="min-item">
+      <div class="min-item-title">議事録公開とAI要約の運用</div>
+      <div class="min-item-body">全10回分の議事録を表紙から閲覧できる構成を検討。修正点を共有し、AIによる要約版も作成・掲載する方針。文字起こしツール導入のメリット（集音性能・話者識別・精度向上・費用面）を説明した。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">給食委員会の一般保護者募集</div>
+      <div class="min-item-body">チラシ・マチコミで募集し、副会長からも働きかけを継続。募集を一般保護者に広げた意図は、副会長の負担軽減だけでなく、興味・関心のある保護者に門戸を開き、子ども<span class="d-add">＋の学校給食</span>にとって最適な人選を目指すため。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">会長トークタイムの新設</div>
+      <div class="min-item-body">各校会長の活動内容や就任経緯を共有し相互理解を深めるため、毎回1〜2名が15分程度発表する企画を導入。初回発表者は<span class="d-del">×藤川小学校</span>→<span class="d-fix">○藤が尾小学校</span>の中野氏が快諾。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">PTA会長の就任経緯（<span class="d-del">×藤川</span>→<span class="d-fix">○藤が尾</span>小学校）</div>
+      <div class="min-item-body">中野氏の就任経緯（自ら立候補、会社からの助言）と「やりたいことをやっていこう」という方針を共有。次年度学年長の早期選出、PTA会費の倍額徴収（今年度限り）、給食センター見学会の試食会形式への変更、地域イベント「<span class="d-del">×フジカワサマーフェスタ</span>→<span class="d-fix">○サマーフェスタ</span>」への参加検討などを報告。<br><span class="d-move">↕ 事務連絡から移動</span><span class="d-add">＋にぎわいフェスタにおける</span>市Ｐブースの金券配布（<span class="d-del">×200円分</span>→<span class="d-fix">○100円×2枚</span>）が好評だった事例も共有された。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">Tシャツ・ユニフォーム方針</div>
+      <div class="min-item-body">現在のTシャツは汗が気になるとの意見から新規作成を検討。LINE WORKSの匿名アンケートで方針を決定予定。代替案としてタオル・帽子・腕章も挙がり、ユニフォーム刷新（例: ユニクロのポロシャツ）も視野に入れる。</div>
+    </div>
+
+    <div class="min-h1">■ イベント・企画</div>
+
+    <div class="min-item">
+      <div class="min-item-title">夢プロジェクト（7月18日）の進捗</div>
+      <div class="min-item-body">中学生が夢の立て方・意義を学ぶ場を提供。当日スタッフとテーブルリーダー（各卓1名）を募集し、リーダー向け事前勉強会も実施予定。会場は「<span class="d-del">×遊遊センター</span>→<span class="d-fix">○ゆうゆうセンター</span>多目的ホール」。全生徒にチラシを配布し、個別の声かけを重視。目標は1校10名・全体100名以上。夏休みのキャリア教育宿題と連携し、7月1日の校長会で正式依頼予定。冬に「夢の追い風（ステップ2）」の追加開催も検討。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">天の川七夕まつりの準備</div>
+      <div class="min-item-body">PTAは地上絵の制作を担当。今年はLEDライト使用で作業が簡略化される見込み。ランタン設置は「水辺プラザ」。笹の飾り付けを各校に依頼し、笹は「星の里いわふね」で調達、6月27日までに実施意向を確認。当日はスマートボールとたこせんの2ブース。午前搬入・14時集合・16時点灯・21時終了の予定。</div>
+    </div>
+
+    <div class="min-h1">■ 事務連絡</div>
+
+    <div class="min-item">
+      <div class="min-item-title">分担金・共有ツール・その他</div>
+      <div class="min-item-body">分担金は児童生徒数×60円を6月30日までにゆうちょ銀行へ振込。各校のPTA活動状況を共有するWebアプリを導入し、来月に入力方法を説明予定。PTA保険の資料は共有フォルダに格納済み。過去の資料・議事録は整理中のホームページに掲載予定。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ プロモ→スライド -->
+<div class="sec">
+  <div class="promo-copy">
+    <h3>プラウドノートPROで作った議事録を<br>Claude等のAIに渡せば、こんな保護者向け概要に作り替えます ✦</h3>
+    <p>読みやすい・伝わる・共有しやすい。<br>Claudeに渡して、「配布用の概要版ビジュアル資料にして！」と言っていただくだけで、会議の内容が一瞬でビジュアル資料に変わります。<br>議事録作成から配布まで、まるごと時短。</p>
+  </div>
+
+  <div class="slide-sec-label">↓ 第2回の議事録から、実際にこんな資料ができます</div>
+
+  <div class="slide-wrap">
+    <div class="slide-inner">
+      <div class="slide-kv">
+        <h2>第2回 会長会<br>ご報告</h2>
+        <p>2026年6月19日 ゆうゆうセンター</p>
+        <div class="slide-date">PTA会長・副会長より保護者の皆さまへ</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">今年度のうごき</div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text">各校会長が持ち回りで活動を紹介する<strong>「会長トークタイム」</strong>を新設</div></div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text">給食委員会を<strong>一般保護者にも開放</strong>。興味のある方を募集</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text">議事録を<strong>AI要約つき</strong>でホームページに公開予定</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">安全・くらしのお知らせ</div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text"><strong>「こども110番」</strong>黄色い旗のセーフティネットへの協力を継続</div></div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text">AED・救命講習を地域で受講可能（<strong>90分／3時間</strong>の選択制）</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text">PTA役員は<strong>Apple製品の学割</strong>が利用可能との情報も共有</div></div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🌟 夢プロジェクト 第1回</div>
+          <div class="event-date-badge">7月18日</div>
+        </div>
+        <div class="event-desc">ゆうゆうセンター多目的ホールにて。中学生が「夢の立て方・意義」を学ぶ場。目標は全体100名以上。当日スタッフ（受付・誘導）とテーブルリーダーを募集中！</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🎋 天の川七夕まつり</div>
+          <div class="event-date-badge">7月開催</div>
+        </div>
+        <div class="event-desc">水辺プラザにてランタン点灯（16時〜21時）。PTAは地上絵づくりを担当。ブースはスマートボール・たこせん。各校での笹の飾り付けも実施予定です。</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🟡 こども110番</div>
+          <div class="event-date-badge">協力者募集</div>
+        </div>
+        <div class="event-desc">黄色い旗を目印に、子どもが危険を感じたら駆け込める地域のセーフティネット。旗の更新と新規協力者を募集しています。ご協力いただける方はぜひご連絡を。</div>
+      </div>
+
+      <div class="action-list">
+        <div class="action-title">皆さまへのお願い</div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">給食委員会の一般募集案内をお待ちください。興味のある方はぜひご参加を</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">夢プロジェクト（7/18）の当日スタッフ・テーブルリーダーにご協力を</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">七夕まつりの笹の飾り付け、各校の実施意向を6月27日までに</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">「こども110番」新規協力（黄色い旗の掲出）にご興味があれば会長まで</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 締め -->
+<div class="closing">
+  <div class="closing-icon">🤝</div>
+  <h3>単Pの負担を、みんなで軽くしていきましょう</h3>
+  <p>録音して、AIに渡して、数か所確認するだけ。その積み重ねが、会長・副会長・委員のみなさんの時間と心の余裕につながります。<br><br>一緒に、もっとラクな運営のかたちを考えていきましょう！！</p>
+</div>
+
+</div>
+<script>
+function toggle(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  btn.setAttribute('aria-expanded',String(!open));
+}
+</script>
+</body>
+</html>
