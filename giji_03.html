@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第3回 会長会 議事録＆AI精度レポート</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f2f0ec;color:#1a1a1a;line-height:1.6;-webkit-text-size-adjust:100%}
+.page{max-width:680px;margin:0 auto;padding:2rem 1.125rem 5rem}
+
+/* HERO */
+.hero{background:#0f172a;border-radius:18px;padding:2.25rem 1.75rem 2rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:#1e3a5f;opacity:.5}
+.hero-tag{display:inline-block;background:#22c55e;color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;margin-bottom:.875rem}
+.hero h1{font-size:clamp(22px,5.5vw,32px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:.75rem}
+.hero h1 em{color:#38bdf8;font-style:normal}
+.hero-sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #1e3a5f}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;background:#1e293b;color:#94a3b8;font-size:11px;padding:5px 10px;border-radius:999px;border:1px solid #334155}
+.hero-chip strong{color:#e2e8f0;font-weight:600}
+
+/* SECTION */
+.sec{margin-top:2rem}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:.75rem}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column}
+.flow-row{display:flex;gap:0;align-items:stretch}
+.flow-line{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0}
+.f-dot{width:28px;height:28px;border-radius:50%;background:#0f172a;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.f-bar{flex:1;width:2px;background:#e5e7eb;margin:4px 0}
+.flow-row:last-child .f-bar{display:none}
+.flow-body{flex:1;padding:.75rem 0 .875rem}
+.f-title{font-size:13px;font-weight:700;color:#111}
+.f-sub{font-size:12px;color:#888;margin-top:2px;line-height:1.5}
+.f-badge{display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:5px}
+
+/* ACCORDION */
+.accord{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:10px}
+.accord-head{width:100%;background:none;border:none;padding:.875rem 1rem;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left;font-family:inherit}
+.accord-head:hover{background:#f9fafb}
+.accord-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.accord-label{flex:1}
+.accord-title{font-size:13px;font-weight:700;color:#111}
+.accord-hint{font-size:11px;color:#888;margin-top:2px}
+.accord-chev{font-size:16px;color:#aaa;transition:transform .25s;flex-shrink:0;font-style:normal}
+.accord-head[aria-expanded="true"] .accord-chev{transform:rotate(180deg)}
+.accord-body{display:none;border-top:1px solid #f0f0f0;padding:1rem}
+.accord-body.open{display:block}
+
+/* ACCURACY */
+.acc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.acc-card{background:#fff;border-radius:10px;padding:.875rem .75rem;text-align:center;border:1px solid #e5e7eb}
+.acc-n{font-size:26px;font-weight:800;line-height:1}
+.acc-l{font-size:11px;color:#888;margin-top:3px}
+.trend{font-size:11px;margin-top:6px;padding:2px 8px;border-radius:999px;display:inline-block;font-weight:600}
+.t-red{background:#fee2e2;color:#b91c1c}
+.t-amber{background:#fef3c7;color:#92400e}
+.t-blue{background:#dbeafe;color:#1d4ed8}
+
+/* DIFF CARD (report accordion) */
+.diff-card{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;border:1px solid #e5e7eb}
+.diff-head{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-bottom:1px solid #f0f0f0}
+.badge-diff{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;flex-shrink:0}
+.badge-err{background:#fee2e2;color:#b91c1c}
+.badge-mod{background:#fef3c7;color:#92400e}
+.badge-add{background:#dbeafe;color:#1d4ed8}
+.diff-label{font-size:13px;font-weight:600;color:#111}
+.diff-compare{display:grid;grid-template-columns:1fr 1fr}
+.diff-col{padding:.75rem 1rem;font-size:13px;line-height:1.5}
+.diff-col-l{border-right:1px solid #f0f0f0}
+.col-label{font-size:10px;font-weight:700;letter-spacing:.03em;margin-bottom:4px}
+.col-before{background:#fffafa}.col-before .col-label{color:#b91c1c}.col-before .col-val{color:#7f1d1d;text-decoration:line-through;text-decoration-color:#fca5a5}
+.col-after{background:#f0fdf7}.col-after .col-label{color:#059669}.col-after .col-val{color:#064e3b}
+.diff-note{padding:.6rem 1rem;font-size:11px;color:#666;background:#fafafa;border-top:1px solid #f0f0f0;line-height:1.5}
+
+/* LEGEND + INLINE DIFF */
+.legend-box{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.875rem 1rem;display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:6px}
+.lg-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.lg-text{font-size:11px;color:#666}
+.lg-del{background:#fee2e2;color:#b91c1c}
+.lg-fix{background:#dcfce7;color:#15803d}
+.lg-add{background:#dbeafe;color:#1d4ed8}
+.lg-move{background:#ede9fe;color:#6d28d9}
+
+.d-del{background:#fee2e2;color:#b91c1c;border-radius:3px;padding:0 3px;text-decoration:line-through;text-decoration-color:#f87171}
+.d-fix{background:#dcfce7;color:#15803d;border-radius:3px;padding:0 3px;font-weight:600}
+.d-add{background:#dbeafe;color:#1d4ed8;border-radius:3px;padding:0 3px;font-weight:600}
+.d-move{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;margin-right:6px;vertical-align:middle}
+
+/* MINUTES */
+.minutes-box{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:1.25rem}
+.min-h1{font-size:13px;font-weight:700;color:#111;margin:1.25rem 0 .5rem;padding-bottom:4px;border-bottom:2px solid #e5e7eb}
+.min-h1:first-child{margin-top:0}
+.min-item{margin-bottom:.875rem}
+.min-item-title{font-size:13px;font-weight:700;color:#111;margin-bottom:2px}
+.min-item-body{font-size:13px;color:#444;line-height:1.85}
+
+/* PROMO COPY */
+.promo-copy{background:#0f172a;border-radius:14px;padding:1.5rem 1.375rem;margin-bottom:1rem}
+.promo-copy h3{font-size:clamp(14px,3.5vw,17px);font-weight:800;color:#fff;line-height:1.5;margin-bottom:.625rem}
+.promo-copy p{font-size:13px;color:#94a3b8;line-height:1.7}
+.slide-sec-label{text-align:center;font-size:12px;color:#888;margin-bottom:.75rem;letter-spacing:.04em}
+
+/* SLIDE — WHITE BASE */
+.slide-wrap{background:#f8fafc;border-radius:16px;overflow:hidden;margin-top:.75rem;border:1px solid #e2e8f0}
+.slide-inner{padding:1.5rem;display:flex;flex-direction:column;gap:10px}
+.slide-kv{background:#0ea5e9;border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.slide-kv::after{content:'📋';position:absolute;right:16px;bottom:-4px;font-size:52px;opacity:.2}
+.slide-kv h2{font-size:clamp(16px,4vw,22px);font-weight:800;color:#fff;line-height:1.3;margin-bottom:.5rem}
+.slide-kv p{font-size:11px;color:#bae6fd;line-height:1.5}
+.slide-date{font-size:10px;background:rgba(255,255,255,.25);color:#fff;padding:2px 10px;border-radius:999px;display:inline-block;margin-top:.5rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.info-card-title{font-size:10px;color:#94a3b8;margin-bottom:.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.info-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px}
+.info-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot-green{background:#22c55e}.dot-amber{background:#f59e0b}.dot-blue{background:#3b82f6}
+.info-text{font-size:12px;color:#374151;line-height:1.45}
+.event-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.event-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:8px;flex-wrap:wrap}
+.event-name{font-size:13px;font-weight:700;color:#111}
+.event-date-badge{font-size:10px;font-weight:700;background:#0ea5e9;color:#fff;padding:2px 9px;border-radius:999px}
+.event-desc{font-size:12px;color:#4b5563;line-height:1.55}
+.action-list{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.action-title{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.action-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.action-item:last-child{margin-bottom:0}
+.check-box{width:15px;height:15px;border-radius:3px;border:1.5px solid #d1d5db;flex-shrink:0;margin-top:2px}
+.action-text{font-size:12px;color:#374151;line-height:1.45}
+
+/* CLOSING */
+.closing{background:#0f172a;border-radius:14px;padding:1.75rem 1.5rem;margin-top:1.5rem;text-align:center}
+.closing-icon{font-size:32px;margin-bottom:.75rem}
+.closing h3{font-size:clamp(15px,4vw,19px);font-weight:800;color:#fff;line-height:1.4;margin-bottom:.75rem}
+.closing p{font-size:13px;color:#94a3b8;line-height:1.75}
+
+@media(max-width:480px){
+  .page{padding:1.125rem .875rem 4rem}
+  .hero{padding:1.75rem 1.25rem 1.5rem;border-radius:14px}
+  .acc-row{gap:7px}
+  .info-grid{grid-template-columns:1fr}
+  .diff-compare{grid-template-columns:1fr}
+  .diff-col-l{border-right:none;border-bottom:1px solid #f0f0f0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ AI議事録 精度レポート</div>
+  <h1>第3回 会長会<br><em>議事録＆AI精度レポート</em></h1>
+  <p class="hero-sub">Plaud Note PROで録音した自動議事録（無修正版）と、単語・話者を直した最終版との差分を公開します。修正を積み重ねるほど、PTA専門用語や固有名詞の誤変換は減っていきます。</p>
+  <div class="hero-meta">
+    <div class="hero-chip">📅 <strong>2026年7月17日</strong></div>
+    <div class="hero-chip">📍 <strong>ゆうゆうセンター４階研修室</strong></div>
+    <div class="hero-chip">👥 <strong>参加17名</strong></div>
+  </div>
+</div>
+
+<!-- ① 使い方フロー -->
+<div class="sec">
+  <div class="sec-title">おすすめの使い方</div>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">1</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">会議を録音</div>
+        <div class="f-sub">テーブルに置いてワンタッチでスタート。話者名を事前登録しておくとより精度UP。</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">2</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">アプリで文字起こし・議事録生成</div>
+        <div class="f-sub">録音データを転送するだけで、AIが自動で文字起こし＆要約。</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">3</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">マイページで単語・話者を修正</div>
+        <div class="f-sub">誤変換をその場で直す。この修正がAIの学習データになり、次回から誤りが減っていく。</div>
+        <span class="f-badge">これが精度向上の鍵</span>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">4</div></div>
+      <div class="flow-body">
+        <div class="f-title">数値・固有名詞だけ目視確認して配布</div>
+        <div class="f-sub">金額・人数・学校名・イベント名など事実に関わる部分のみ確認。全文を読み直す必要なし。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 精度レポート -->
+<div class="sec">
+  <div class="sec-title">第3回の議事録 精度レポート</div>
+  <div class="acc-row" style="grid-template-columns:repeat(2,1fr)">
+    <div class="acc-card"><div class="acc-n" style="color:#ef4444">5</div><div class="acc-l">要確認の誤り</div><span class="trend t-red">略称・同音語</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#f59e0b">1</div><div class="acc-l">表現・構造の差</div><span class="trend t-amber">見出しの精度</span></div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fee2e2">⚠️</div>
+      <div class="accord-label">
+        <div class="accord-title">要確認の誤り（5件）</div>
+        <div class="accord-hint">傾向：学校名・略称・同音異義語。意味が反転する誤りが1件</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">同音異義語</span><span class="diff-label">フリースペースの開放日</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">前日直行OK／全校前日開放</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">全日直行OK／全校全日開放</div></div>
+        </div>
+        <div class="diff-note">「ぜんじつ」と「ぜんにち」の混同（2カ所）。運用の意味がまるごと変わる、今回いちばん危険なミス。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">学校名</span><span class="diff-label">ブロック名・実施校・講演担当校</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">未来学園</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">交野みらい学園</div></div>
+        </div>
+        <div class="diff-note">「こうのみらいがくえん」を略して誤変換（3カ所）。単語登録で次回から防げる。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">略称の誤変換</span><span class="diff-label">市Ｐを指す呼称</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">CP会長は毎年PTA・CPが担当</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">委員長は例年市Ｐ会長が就任</div></div>
+        </div>
+        <div class="diff-note">「市Ｐ」を「CP」と誤変換し、さらに主語が不明な文に。誰が何を担当するかが変わるため要チェック。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">人名</span><span class="diff-label">クロージング担当者</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">杉田と二山（畑山）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">杉田と畑山</div></div>
+        </div>
+        <div class="diff-note">「はたやま」を「ふたやま」と誤変換し、AIが両方を併記して迷った状態のまま出力。話者登録で対応可。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-err">会場名</span><span class="diff-label">スタッフ集合場所</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">遊遊センター</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">ゆうゆうセンター</div></div>
+        </div>
+        <div class="diff-note">第2回に続く再発。ひらがな表記の会場名は漢字化されやすいため、単語登録の効果を次回検証する。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fef3c7">📝</div>
+      <div class="accord-label">
+        <div class="accord-title">表現・構造の差（1件）</div>
+        <div class="accord-hint">傾向：通称と正式な事業名の主従が逆転</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-mod">見出しの精度</span><span class="diff-label">放課後の居場所事業の名称</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">放課後フリースペース（学校開放）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">放課後学校開放事業（フリースペース）</div></div>
+        </div>
+        <div class="diff-note">通称と事業名の主従が逆転。行政の正式な事業名に合わせて整理した。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 実際の議事録（インライン差分） -->
+<div class="sec">
+  <div class="sec-title">実際の議事録を見る</div>
+
+  <div class="legend-box">
+    <div class="legend-item"><span class="lg-icon lg-del">×</span><span class="lg-text">修正前（誤り）</span></div>
+    <div class="legend-item"><span class="lg-icon lg-fix">○</span><span class="lg-text">修正後</span></div>
+    <div class="legend-item"><span class="lg-icon lg-add">＋</span><span class="lg-text">追記・補足</span></div>
+    <div class="legend-item"><span class="lg-icon lg-move">↕</span><span class="lg-text">位置を移動</span></div>
+  </div>
+
+  <div class="minutes-box">
+    <div class="min-h1">■ 学校運営協議会（CS）・行政連携</div>
+
+    <div class="min-item">
+      <div class="min-item-title">トイレ維持管理の課題と教育化</div>
+      <div class="min-item-body">学び支援課に、乾式トイレ移行に伴う備品準備・清掃方法のレクチャー支援を期待。乾式化により汚れが目立ち定期清掃が必要で、維持管理の難しさを指摘。学校運営協議会（CS）で、<span class="d-del">×公共施設</span>→<span class="d-fix">○公共財</span>の適切な利用・管理教育として授業に組み込む案を議論。清掃手順の週次設計（曜日ごとの重点配分）や備品調達を、PTA・地域学校協働本部の会計と連携して進める提案も出た。<span class="d-add">＋岩船小学校の</span>校長も教育としての取り込みに前向き。<br>【結論】トイレ維持管理を教育として扱い、情報共有を継続しつつ具体的な手順・備品調達を検討する方針で概ね合意。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">保護者代表の連続性・情報共有強化（CS）</div>
+      <div class="min-item-body">三中ブロック以外は各単Ｐ会長が保護者代表として参加。PTAの任期交代が早く、継続的な理解が途切れやすい点が課題。他ブロックの動きや課題を会長会で共有し、保護者の声を安定的に届ける仕組みを提案。<span class="d-del">×Speaker 2</span>→<span class="d-fix">○角会長</span>より、連続性を保ちつつ新メンバーを循環させるバランス案。前田氏より、市Ｐ会長OB会「三本松会」からCSに人材を出す構想（退任後2年間派遣）を共有。<br>【結論】定期共有と役割強化に概ね合意。三中ブロックでも参加拡大を働きかける。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">コミュニティルーム設置・ゲストWi-Fi整備要望</div>
+      <div class="min-item-body"><span class="d-del">×未来学園</span>→<span class="d-fix">○交野みらい学園</span>ブロックでのコミュニティルーム・ゲストWi-Fi整備の要望が継続しており、未達の状況を共有。第4ブロックからもゲストWi-Fiの要望あり、全地区で要望の吸い上げを進める。9月の交野市予算編成に向け、CSとして広報費・活動費の増額要望を上げる方針。<br>【結論】各ブロックの要望を会長会で共有し、編成時期に合わせて要望を提出。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title"><span class="d-del">×CP</span>→<span class="d-fix">○市Ｐ</span>と教育コミュニティづくり推進事業運営委員会との連携</div>
+      <div class="min-item-body">教育コミュニティづくり推進事業運営委員会の委員長は、例年<span class="d-del">×CP</span>→<span class="d-fix">○市Ｐ</span>会長が就任。第1回で各ブロックの動きを共有済み。地域コーディネータの学校間連携の負担が大きく、会長会での定期共有で補完する提案が出た。<br>【結論】会長会で定期共有を進め、保護者代表としての役割を強化する。</div>
+    </div>
+
+    <div class="min-h1">■ PTA運営・組織づくり</div>
+
+    <div class="min-item">
+      <div class="min-item-title">広報活用（ホームページ・インスタグラム）</div>
+      <div class="min-item-body">大矢氏より、ホームページ・インスタグラム・広告での情報発信が進行中との報告。会長向け専用ページの導線を整備した。議事録自動化ボード（録音の自動文字起こし・手直しの記録）をサイトで公開し、前回会長会分も掲載済み。会議の振り返り議事次第・議事録は議事次第の最終ページに添付する。会長向けページは当面LINE WORKSで直接リンクを共有し、Googleサイトへ移行予定。アクセス権限は閲覧中心に再設計する。<br>【結論】会長向けページの活用を促進し、アクセス権整備後にGoogleサイトへ移行。追加掲載の要望は随時受け付ける。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">単Ｐ規約・総会資料の収集と比較機能</div>
+      <div class="min-item-body">各単位PTAの会則・細則・総会資料（予算・決算含む）を定期的に収集・共有する取り組みを再開。所定フォルダへの提出を依頼予定。会費条文・会員資格の比較一覧や、他校規約の比較機能を開発する。<span class="d-del">×枚方市PTAの入学式案内等の好事例も参照可能にする。</span><br>【結論】収集案内を各校へ発出し、仕組み構築後に共有。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">PTA役員選出方法・課題と工夫</div>
+      <div class="min-item-body">指名委員の有無、選考管理委員会による候補探索、電話勧誘の負担などを共有。低学年の保護者が「役員免除」のメリットを目的に早期立候補する傾向があり、メリット消失によるなり手減少の懸念も。役得（卒業式・運動会の良席など）を規約に明記して動機付けする案、Googleフォームで関心度を段階的に質問し「話を聞いてから考えたい」等の選択肢を設けて回答が増えた事例、匿名オープンチャットでの仕事内容の質問受付や希望者への対面説明といったフォロー策が挙がった。地区委員は近隣トラブルのリスクから敬遠されがちで、PTA全体でトラブル対応体制を整え負担を軽減する必要がある。立候補が定数未満の場合は既存役員が任期を延長して継続するケースも。規約変更が全保護者にとって良いかを重視しつつ、会長は1年かけて次期会長候補を探す役割を担う。<br>【結論】役員選出の情報共有を9月以降も継続。合同委員会（会長会・副会長委員会）で関心の高い議題を扱い、他校との連携を強化。10月の合同開催に向け準備（保育サポート・軽食を検討）。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">教職員の負担軽減に関する特別委員会</div>
+      <div class="min-item-body">若手教員の早期離職や、保護者対応を含む学校トラブルが課題。学校の役割整理と負担軽減が必要との認識を共有。コミュニティスクールは教職員の補助から始まった経緯があり、保護者・学校のコミュニケーション不足が問題を深刻化させている。既往のワークショップでは、保護者が協力できる領域・PTAが代行できる領域が明確になり、教員からの評価も高かった。<br>【結論】特別委員会（仮称）の設置を全会一致で承認。有志をLINE WORKSで募集し、名称決定後3〜4回程度の会議で活動を開始する。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">校長・教頭とのコミュニケーション強化</div>
+      <div class="min-item-body">日常会話で関係を構築し、学校側の困りごとの共有やPTA要望の伝達を円滑にする。学期に一度、30分程度の振り返り・雑談の時間を推奨。手土産は不要で気軽に。マチコミ導入の事例では、粘り強い対話で誤解が解消し統一運用に至った。<br>【結論】各PTAで定期的なコミュニケーションの時間を設けることを推奨。</div>
+    </div>
+
+    <div class="min-h1">■ 子どもの居場所・安全</div>
+
+    <div class="min-item">
+      <div class="min-item-title">防災キャンプ支援の進捗</div>
+      <div class="min-item-body">星小・旭小・<span class="d-del">×未来学園</span>→<span class="d-fix">○交野みらい学園</span>で実施に向けた検討が進行中。予算未計上でも今年度はバックアップ予定で、12月開始でも間に合う。過去の防災キャラバンの事例（ポイントラリーと不要おもちゃオークションによるゲーム型学習）も紹介。機材は既にPTAで購入した分を他校でも利用可能。<br>【結論】資料を確認のうえ、各校で検討を継続。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title"><span class="d-del">×放課後フリースペース（学校開放）</span>→<span class="d-fix">○放課後学校開放事業（フリースペース）</span>の運用</div>
+      <div class="min-item-body"><strong>目的：</strong>共働き世帯の増加や公園の安全課題への対応として、校内に安全な<span class="d-del">×遊び場を提供する</span>→<span class="d-fix">○居場所をつくる</span>こと。<br><strong>運用差：</strong>直行できる学校と、一時帰宅後に再来校する学校が存在。低学年や遠距離の児童に一時帰宅は非現実的で、要望により「<span class="d-del">×前日</span>→<span class="d-fix">○全日</span>直行OK」へ変更した事例もある。<br><strong>見守り体制：</strong>有償ボランティア（1回1,800円）が受付・見守りを担当し、怪我の際は学校へ連絡。募集拡大はPTAチラシ・地域への声かけで検討。<span class="d-del">×年間雑所得20万円程度までは確定申告不要との補足もあった。</span><br><strong>施設・運用：</strong>体育館の冷暖房整備を拡充する方針。寺子屋の実施事例あり。宿題ができる部屋の優先整備、宿題後に外遊びという流れも提案された。<br><strong>行政の整理：</strong>子育て支援は市長部局の所管で、教育委員会とは切り分け。学校は場所を提供し、フリースペースは社会教育の一環。学童は有償の預かり・指導員、フリースペースは無料の遊び場・有償の見守りという違いがある。<br><strong>予算・人員：</strong>「全校<span class="d-del">×前日</span>→<span class="d-fix">○全日</span>開放でも予算は足り、人が不足している」と明言。学校の時間割（6時間目の体育など）との調整が必要。ボランティアの割り振り・シフトは子育て支援課が配布し、所属校限定も他校可も選択できる。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">学校保健関連委員会</div>
+      <div class="min-item-body">寺島・塚田<span class="d-add">＋子ども</span>クリニックより、側弯症を早期かつ正確に測定できる機器の導入提案（小中対象）。11月の講演は<span class="d-del">×未来学園</span>→<span class="d-fix">○交野みらい学園</span>が担当予定。内容の決定は学校・保健教員が中心となるため、PTAからのテーマ提案は今の時期が適当。取り扱う領域として、測定時の配慮（下着・男女別）や性教育の検討（三中副会長から提案あり、届け方を検討中）が挙がった。</div>
+    </div>
+
+    <div class="min-h1">■ イベント・企画</div>
+
+    <div class="min-item">
+      <div class="min-item-title">枚方公演オーケストラの後援名義</div>
+      <div class="min-item-body">神戸の団体より、<span class="d-add">＋交野市</span>PTA協議会の後援名義使用の依頼（教育委員の中山氏経由）。教育的価値・非営利性を勘案し柔軟に対応する方針。過去の実績に「ちびっこわんぱく相撲」等がある。会長会で賛成多数により承認。チラシ到着後、まちコミ・紙媒体等で保護者へ周知する。<br>【結論】後援名義の付与を承認、広報は各校・PTAで対応。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">夢プロジェクト・夢ナビと研修会運営</div>
+      <div class="min-item-body">夢プロジェクトはイベント終了後に内容を共有予定。夏休みの宿題として動画2本（1〜4年向け約<span class="d-del">×4:44</span>→<span class="d-fix">○4分</span>／5年生以上向け<span class="d-add">＋約8分</span>）を配布し、学校タブレットから視聴可能。職業名ではなく「<span class="d-add">＋なった</span>先にある何か」を考える宿題設計とした。<br>夢ナビアプリは文章をタップして選ぶ方式で作成でき、送信データは個人情報を収集せず学校単位等で集計。学校iPadのGoogle系<span class="d-add">＋を排除する</span>フィルタの問題に対応し<span class="d-del">×解除版で</span>再構築した。内容確認とフィードバックの受付は継続。<br>PTAイベントの申込は111名の盛況。会場配置は音の干渉を抑え、学年別のテーブル構成に。高学年は保護者と別テーブルが基本で、保護者は同学年か一つ上の学年の保護者テーブルへ。近視・トイレの近くを希望・子連れ等は座席を調整し、小さい子連れの班は保護者2名体制。班の変更希望にも柔軟に対応する。<br>ファシリテーター／テーブルリーダーを各卓に配置。LINE WORKSにワークシートを掲載し、記入の促進が主なミッション。進行は杉田氏・畑山氏の掛け合いで、アイスブレイクを実施。<br>研修会の目的は「中学生が夢を語れなくなる現象の解消」。ファシリテーターメモに各スライドのワークと声かけ例を記載した。前半は職業を書き出し、その職業を通じて「どうなりたいか」「誰の役に立つか」を言語化。中盤は「誰にどんな影響を与えたいか」を一文にして共有し、夢は単一の職業に限定されないことを説明。ゲームは「人の命を救う」を実現できる職業・活動を多く挙げるテーブル対抗戦とし、振り返りで他の実現方法を列挙。終盤は目の前の人を笑顔にすること、困っている人を助ける力をつけること、当たり前への感謝を伝え、「今日からできること」を具体化する。クロージングは杉田氏と<span class="d-del">×二山</span>→<span class="d-fix">○畑山</span>氏で実施。<br>低学年テーブルは自由な発言を受け入れ、混在を避ける配置に。高学年・大人には「何かを持ち帰る」進行とする。<br><strong>当日運営：</strong>スタッフ集合は7/18 11:30（<span class="d-del">×遊遊センター</span>→<span class="d-fix">○ゆうゆうセンター</span>1階）。軽い打合せ、テーブルリーダーの役割確認、受付の依頼を行う。会場の利用可能時間が1時間のため12:30〜13:00で迅速に設営し、質疑は12時台に完了。スタッフは購入したTシャツを着用。紙資料を配布し、追加質問は7/18に受け付ける。</div>
+    </div>
+
+    <div class="min-h1">■ 次の段取り（主なもの）</div>
+
+    <div class="min-item">
+      <div class="min-item-body">・枚方公演オーケストラのチラシ受領後、まちコミ・紙媒体等で保護者へ周知<br>・乾式トイレの清掃手順（週次設計）と備品リスト案をCSで整理し、学校・PTA・共同本部会計と調整<br>・各ブロックのコミュニティルーム設置・ゲストWi-Fi整備の要望を収集し、9月の予算要望に反映<br>・<span class="d-del">×CP</span>→<span class="d-fix">○市Ｐ</span>共有事項を会長会に定期的に下ろし、各校へ展開<br>・単Ｐ規約・会則・細則・総会資料の提出フォルダを案内し、各校からの収集を開始<br>・教職員負担軽減の特別委員会メンバーをLINE WORKSで募集し、活動開始の準備<br>・フリースペースの有償ボランティア募集用PTAチラシを作成・配布し、シフトを子育て支援課と調整<br>・合同委員会（会長会・副会長委員会）の議題募集と詳細案内、副会長宛ての開催案内送付<br>・7月18日11:30に<span class="d-del">×遊遊センター</span>→<span class="d-fix">○ゆうゆうセンター</span>1階へスタッフ集合、Tシャツ着用で参加</div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ プロモ→スライド -->
+<div class="sec">
+  <div class="promo-copy">
+    <h3>プラウドノートPROで作った議事録を<br>Claude等のAIに渡せば、こんな保護者向け概要に作り替えます ✦</h3>
+    <p>読みやすい・伝わる・共有しやすい。<br>Claudeに渡して、「配布用の概要版ビジュアル資料にして！」と言っていただくだけで、会議の内容が一瞬でビジュアル資料に変わります。<br>議事録作成から配布まで、まるごと時短。</p>
+  </div>
+
+  <div class="slide-sec-label">↓ 第3回の議事録から、実際にこんな資料ができます</div>
+
+  <div class="slide-wrap">
+    <div class="slide-inner">
+      <div class="slide-kv">
+        <h2>第3回 会長会<br>ご報告</h2>
+        <p>2026年7月17日 ゆうゆうセンター４階研修室</p>
+        <div class="slide-date">PTA会長・副会長より保護者の皆さまへ</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">今年度のうごき</div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text"><strong>教職員の負担軽減 特別委員会</strong>の設置を承認。有志を募集中</div></div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text">各校の会則・総会資料を集めて<strong>比べられる仕組み</strong>づくりを開始</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text">会長会の<strong>議事録をホームページで公開</strong>（AI要約つき）</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">学校・くらしのお知らせ</div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text">放課後フリースペースが<strong>「全日直行OK」</strong>へ変更した学校も</div></div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text">体育館の<strong>冷暖房整備</strong>・宿題ができる部屋の優先整備を要望</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text">ゲストWi-Fi・コミュニティルームを<strong>9月の予算要望</strong>へ</div></div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🌟 夢プロジェクト 第1回</div>
+          <div class="event-date-badge">7月18日</div>
+        </div>
+        <div class="event-desc">ゆうゆうセンターにて開催。お申込みは<strong>111名</strong>と大盛況です。学年別テーブルで「夢の立て方」を考えます。夏休みの宿題用に、学年別の動画2本（約4分／約8分）を学校タブレットから視聴できます。</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🏫 放課後フリースペース</div>
+          <div class="event-date-badge">見守り募集中</div>
+        </div>
+        <div class="event-desc">放課後に校内で安全に過ごせる無料の居場所づくり。受付・見守りをしてくださる有償ボランティア（1回1,800円）を募集しています。予算はあるものの人手が不足している状況です。</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">⛺ 防災キャンプ</div>
+          <div class="event-date-badge">実施校 検討中</div>
+        </div>
+        <div class="event-desc">星小・旭小・交野みらい学園で実施に向けた検討が進行中。ポイントラリーやおもちゃオークションなど、遊びながら自助・共助を学べる内容。機材は他校のPTA購入分も利用できます。</div>
+      </div>
+
+      <div class="action-list">
+        <div class="action-title">皆さまへのお願い</div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">夢プロジェクト当日（7/18）のスタッフは11:30にゆうゆうセンター1階へ、Tシャツ着用で</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">夏休みの宿題として、夢ナビの動画（学年別2本）をご家庭でもご確認ください</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">放課後フリースペースの見守りボランティアにご協力いただける方はご連絡を</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">先生方の負担軽減を考える特別委員会の有志を、LINE WORKSで募集中です</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 締め -->
+<div class="closing">
+  <div class="closing-icon">🤝</div>
+  <h3>単Pの負担を、みんなで軽くしていきましょう</h3>
+  <p>録音して、AIに渡して、数か所確認するだけ。その積み重ねが、会長・副会長・委員のみなさんの時間と心の余裕につながります。<br><br>一緒に、もっとラクな運営のかたちを考えていきましょう！！</p>
+</div>
+
+</div>
+<script>
+function toggle(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  btn.setAttribute('aria-expanded',String(!open));
+}
+</script>
+</body>
+</html>
