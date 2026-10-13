@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第4回 会長会＆第1回 副会長委員会 議事録＆AI精度レポート</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f2f0ec;color:#1a1a1a;line-height:1.6;-webkit-text-size-adjust:100%}
+.page{max-width:680px;margin:0 auto;padding:2rem 1.125rem 5rem}
+
+/* HERO */
+.hero{background:#0f172a;border-radius:18px;padding:2.25rem 1.75rem 2rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:#1e3a5f;opacity:.5}
+.hero-tag{display:inline-block;background:#22c55e;color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;margin-bottom:.875rem}
+.hero h1{font-size:clamp(22px,5.5vw,32px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:.75rem}
+.hero h1 em{color:#38bdf8;font-style:normal}
+.hero-sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #1e3a5f}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;background:#1e293b;color:#94a3b8;font-size:11px;padding:5px 10px;border-radius:999px;border:1px solid #334155}
+.hero-chip strong{color:#e2e8f0;font-weight:600}
+
+/* SECTION */
+.sec{margin-top:2rem}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:.75rem}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column}
+.flow-row{display:flex;gap:0;align-items:stretch}
+.flow-line{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0}
+.f-dot{width:28px;height:28px;border-radius:50%;background:#0f172a;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.f-bar{flex:1;width:2px;background:#e5e7eb;margin:4px 0}
+.flow-row:last-child .f-bar{display:none}
+.flow-body{flex:1;padding:.75rem 0 .875rem}
+.f-title{font-size:13px;font-weight:700;color:#111}
+.f-sub{font-size:12px;color:#888;margin-top:2px;line-height:1.5}
+.f-badge{display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:5px}
+
+/* ACCORDION */
+.accord{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:10px}
+.accord-head{width:100%;background:none;border:none;padding:.875rem 1rem;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left;font-family:inherit}
+.accord-head:hover{background:#f9fafb}
+.accord-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.accord-label{flex:1}
+.accord-title{font-size:13px;font-weight:700;color:#111}
+.accord-hint{font-size:11px;color:#888;margin-top:2px}
+.accord-chev{font-size:16px;color:#aaa;transition:transform .25s;flex-shrink:0;font-style:normal}
+.accord-head[aria-expanded="true"] .accord-chev{transform:rotate(180deg)}
+.accord-body{display:none;border-top:1px solid #f0f0f0;padding:1rem}
+.accord-body.open{display:block}
+
+/* ACCURACY */
+.acc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.acc-card{background:#fff;border-radius:10px;padding:.875rem .75rem;text-align:center;border:1px solid #e5e7eb}
+.acc-n{font-size:26px;font-weight:800;line-height:1}
+.acc-l{font-size:11px;color:#888;margin-top:3px}
+.trend{font-size:11px;margin-top:6px;padding:2px 8px;border-radius:999px;display:inline-block;font-weight:600}
+.t-red{background:#fee2e2;color:#b91c1c}
+.t-amber{background:#fef3c7;color:#92400e}
+.t-blue{background:#dbeafe;color:#1d4ed8}
+.good-note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:.7rem 1rem;font-size:12px;color:#166534;line-height:1.6;margin-bottom:1rem}
+.good-note strong{color:#14532d}
+
+/* DIFF CARD (report accordion) */
+.diff-card{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;border:1px solid #e5e7eb}
+.diff-head{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-bottom:1px solid #f0f0f0}
+.badge-diff{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;flex-shrink:0}
+.badge-err{background:#fee2e2;color:#b91c1c}
+.badge-mod{background:#fef3c7;color:#92400e}
+.badge-add{background:#dbeafe;color:#1d4ed8}
+.diff-label{font-size:13px;font-weight:600;color:#111}
+.diff-compare{display:grid;grid-template-columns:1fr 1fr}
+.diff-col{padding:.75rem 1rem;font-size:13px;line-height:1.5}
+.diff-col-l{border-right:1px solid #f0f0f0}
+.col-label{font-size:10px;font-weight:700;letter-spacing:.03em;margin-bottom:4px}
+.col-before{background:#fffafa}.col-before .col-label{color:#b91c1c}.col-before .col-val{color:#7f1d1d;text-decoration:line-through;text-decoration-color:#fca5a5}
+.col-after{background:#f0fdf7}.col-after .col-label{color:#059669}.col-after .col-val{color:#064e3b}
+.diff-note{padding:.6rem 1rem;font-size:11px;color:#666;background:#fafafa;border-top:1px solid #f0f0f0;line-height:1.5}
+
+/* LEGEND + INLINE DIFF */
+.legend-box{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.875rem 1rem;display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:6px}
+.lg-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.lg-text{font-size:11px;color:#666}
+.lg-del{background:#fee2e2;color:#b91c1c}
+.lg-fix{background:#dcfce7;color:#15803d}
+.lg-add{background:#dbeafe;color:#1d4ed8}
+.lg-move{background:#ede9fe;color:#6d28d9}
+
+.d-del{background:#fee2e2;color:#b91c1c;border-radius:3px;padding:0 3px;text-decoration:line-through;text-decoration-color:#f87171}
+.d-fix{background:#dcfce7;color:#15803d;border-radius:3px;padding:0 3px;font-weight:600}
+.d-add{background:#dbeafe;color:#1d4ed8;border-radius:3px;padding:0 3px;font-weight:600}
+.d-move{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;margin-right:6px;vertical-align:middle}
+
+/* MINUTES */
+.minutes-box{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:1.25rem}
+.min-h1{font-size:13px;font-weight:700;color:#111;margin:1.25rem 0 .5rem;padding-bottom:4px;border-bottom:2px solid #e5e7eb}
+.min-h1:first-child{margin-top:0}
+.min-item{margin-bottom:.875rem}
+.min-item-title{font-size:13px;font-weight:700;color:#111;margin-bottom:2px}
+.min-item-body{font-size:13px;color:#444;line-height:1.85}
+
+/* PROMO COPY */
+.promo-copy{background:#0f172a;border-radius:14px;padding:1.5rem 1.375rem;margin-bottom:1rem}
+.promo-copy h3{font-size:clamp(14px,3.5vw,17px);font-weight:800;color:#fff;line-height:1.5;margin-bottom:.625rem}
+.promo-copy p{font-size:13px;color:#94a3b8;line-height:1.7}
+.slide-sec-label{text-align:center;font-size:12px;color:#888;margin-bottom:.75rem;letter-spacing:.04em}
+
+/* SLIDE — WHITE BASE */
+.slide-wrap{background:#f8fafc;border-radius:16px;overflow:hidden;margin-top:.75rem;border:1px solid #e2e8f0}
+.slide-inner{padding:1.5rem;display:flex;flex-direction:column;gap:10px}
+.slide-kv{background:#0ea5e9;border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.slide-kv::after{content:'📋';position:absolute;right:16px;bottom:-4px;font-size:52px;opacity:.2}
+.slide-kv h2{font-size:clamp(16px,4vw,22px);font-weight:800;color:#fff;line-height:1.3;margin-bottom:.5rem}
+.slide-kv p{font-size:11px;color:#bae6fd;line-height:1.5}
+.slide-date{font-size:10px;background:rgba(255,255,255,.25);color:#fff;padding:2px 10px;border-radius:999px;display:inline-block;margin-top:.5rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.info-card-title{font-size:10px;color:#94a3b8;margin-bottom:.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.info-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px}
+.info-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot-green{background:#22c55e}.dot-amber{background:#f59e0b}.dot-blue{background:#3b82f6}
+.info-text{font-size:12px;color:#374151;line-height:1.45}
+.event-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.event-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:8px;flex-wrap:wrap}
+.event-name{font-size:13px;font-weight:700;color:#111}
+.event-date-badge{font-size:10px;font-weight:700;background:#0ea5e9;color:#fff;padding:2px 9px;border-radius:999px}
+.event-desc{font-size:12px;color:#4b5563;line-height:1.55}
+.action-list{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.action-title{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.action-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.action-item:last-child{margin-bottom:0}
+.check-box{width:15px;height:15px;border-radius:3px;border:1.5px solid #d1d5db;flex-shrink:0;margin-top:2px}
+.action-text{font-size:12px;color:#374151;line-height:1.45}
+
+/* CLOSING */
+.closing{background:#0f172a;border-radius:14px;padding:1.75rem 1.5rem;margin-top:1.5rem;text-align:center}
+.closing-icon{font-size:32px;margin-bottom:.75rem}
+.closing h3{font-size:clamp(15px,4vw,19px);font-weight:800;color:#fff;line-height:1.4;margin-bottom:.75rem}
+.closing p{font-size:13px;color:#94a3b8;line-height:1.75}
+
+@media(max-width:480px){
+  .page{padding:1.125rem .875rem 4rem}
+  .hero{padding:1.75rem 1.25rem 1.5rem;border-radius:14px}
+  .acc-row{gap:7px}
+  .info-grid{grid-template-columns:1fr}
+  .diff-compare{grid-template-columns:1fr}
+  .diff-col-l{border-right:none;border-bottom:1px solid #f0f0f0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ AI議事録 精度レポート</div>
+  <h1>第4回 会長会＆<br>第1回 副会長委員会<br><em>議事録＆AI精度レポート</em></h1>
+  <p class="hero-sub">Plaud Note PROで録音した自動議事録（無修正版）と、単語・話者を直した最終版との差分を公開します。修正を積み重ねるほど、PTA専門用語や固有名詞の誤変換は減っていきます。</p>
+  <div class="hero-meta">
+    <div class="hero-chip">📅 <strong>2026年9月18日</strong></div>
+    <div class="hero-chip">📍 <strong>ゆうゆうセンター３階研修室</strong></div>
+    <div class="hero-chip">👥 <strong>市P役員・単P会長・副会長</strong></div>
+  </div>
+</div>
+
+<!-- ① 使い方フロー -->
+<div class="sec">
+  <div class="sec-title">おすすめの使い方</div>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">1</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">会議を録音</div>
+        <div class="f-sub">テーブルに置いてワンタッチでスタート。話者名を事前登録しておくとより精度UP。</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">2</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">アプリで文字起こし・議事録生成</div>
+        <div class="f-sub">録音データを転送するだけで、AIが自動で文字起こし＆要約。</div>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">3</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">マイページで単語・話者を修正</div>
+        <div class="f-sub">誤変換をその場で直す。この修正がAIの学習データになり、次回から誤りが減っていく。</div>
+        <span class="f-badge">これが精度向上の鍵</span>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">4</div></div>
+      <div class="flow-body">
+        <div class="f-title">数値・固有名詞だけ目視確認して配布</div>
+        <div class="f-sub">金額・日付・学校名・イベント名など事実に関わる部分のみ確認。全文を読み直す必要なし。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ② 精度レポート -->
+<div class="sec">
+  <div class="sec-title">第4回の議事録 精度レポート</div>
+  <div class="acc-row">
+    <div class="acc-card"><div class="acc-n" style="color:#ef4444">8</div><div class="acc-l">要確認の誤り</div><span class="trend t-red">同音語・日付</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#f59e0b">4</div><div class="acc-l">表現・構造の差</div><span class="trend t-amber">趣旨・配置</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#3b82f6">5</div><div class="acc-l">情報の追加</div><span class="trend t-blue">次第で補完</span></div>
+  </div>
+
+  <div class="good-note">✓ <strong>単語登録の効果を確認：</strong>第2回・第3回で再発していた「遊遊センター」の誤変換が、今回は最初から「ゆうゆうセンター」と正しく出力されました。</div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fee2e2">⚠️</div>
+      <div class="accord-label">
+        <div class="accord-title">要確認の誤り（8件）</div>
+        <div class="accord-hint">傾向：同音異義語が半数。本文と「次の段取り」で日付が食い違う誤りも</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">日付</span><span class="diff-label">にぎわいフェスタの搬入日・開催日</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">9/23搬入、9/24-25当日</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">10/23搬入、10/24-25当日</div></div>
+        </div>
+        <div class="diff-note">本文は「10月24日・25日」と正しいのに、末尾の「次の段取り」だけ1か月ずれていた。今回いちばん危険なミスで、手修正でも見落としかけた。本文と段取りの日付の突き合わせは必須。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">同音異義語</span><span class="diff-label">共有ボードで優先回答する項目</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">「投票反映」</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">「登校班」</div></div>
+        </div>
+        <div class="diff-note">「とうこうはん」を「とうひょうはんえい」と誤変換（2カ所）。本文だけ直して「次の段取り」に残っていたため、両方修正。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">同音異義語</span><span class="diff-label">廃止した輪番制の対象</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">会計初期の輪番制</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">会計・書記の輪番制</div></div>
+        </div>
+        <div class="diff-note">「しょき」を「初期」と変換。意味の通らない語になり、何を廃止したのかが伝わらなくなっていた。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">同音異義語</span><span class="diff-label">夏のイベント名</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">夢の招待</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">夢の正体</div></div>
+        </div>
+        <div class="diff-note">「しょうたい」の取り違え。同じ文の中に「夢の正体は職業ではない」と正しく出ているのに、イベント名だけ誤変換。単語登録で防げる。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">固有名詞</span><span class="diff-label">「逃走中」を行うイベント名</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">交野コートふれあいフェスティバル</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">３中校区ふれあいフェスティバル</div></div>
+        </div>
+        <div class="diff-note">「こうく」を「コート」と変換し、存在しない名称に（3カ所）。どの校区の行事かが分からなくなる誤り。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">事実の取り違え</span><span class="diff-label">給食委員会の従来の選び方</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">「会長指名」から「保護者公募」へ</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">「輪番副会長」から「保護者公募」へ</div></div>
+        </div>
+        <div class="diff-note">次第資料は「輪番制→立候補制」。AIがもっともらしい言葉で補ってしまった例で、変更前の運用が事実と異なっていた。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">時制</span><span class="diff-label">共有ボードのレクチャー</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">後日レクチャーを実施予定</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">本日レクチャーを実施</div></div>
+        </div>
+        <div class="diff-note">レクチャーは会議の中で実施済み。次第の「使い方は後ほどレクチャー」（＝会議の後半）をAIが「後日」と解釈したとみられる。「次の段取り」も「使い方サポートを適宜実施」に修正。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-err">対象の取り違え</span><span class="diff-label">個人賠償責任保険の強制解約の原因</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">PTA協議会脱退に伴い</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">大阪府PTA協議会（府Ｐ）脱退に伴い</div></div>
+        </div>
+        <div class="diff-note">どの協議会か不明なままだと「市Ｐを抜けると保険が切れる」とも読めてしまう。次第資料に合わせて府Ｐと明記。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fef3c7">📝</div>
+      <div class="accord-label">
+        <div class="accord-title">表現・構造の差（4件）</div>
+        <div class="accord-hint">傾向：言い回しの強弱と、項目の配置</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">位置の移動</span><span class="diff-label">男性役員の参加促進</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">独立した議題として記載</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">「次年度PTA役員の選出方法」の中へ</div></div>
+        </div>
+        <div class="diff-note">役員選出の工夫の一つとして話された内容のため、選出方法の項目にまとめた。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">ニュアンス</span><span class="diff-label">単発イベントの扱い</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">必ずしも引き継ぐ義務はなく…その年限りとしても良い</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">引き継ぐ義務はなく…その年限りとすべき</div></div>
+        </div>
+        <div class="diff-note">今回はAIの表現が弱すぎたケース。「してもよい」と「すべき」では後任への伝わり方が変わる。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">趣旨</span><span class="diff-label">市Ｐが単Ｐを支援する目的</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">自校活動に専念できるよう</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">自校活動が効率化し、より良くなるよう</div></div>
+        </div>
+        <div class="diff-note">「専念」だけでは目的が伝わりにくいため、効率化して良くしていく趣旨に整えた。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-mod">事実の表現</span><span class="diff-label">共有ボードの位置づけ</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">整備・導入</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">整備・開発</div></div>
+        </div>
+        <div class="diff-note">既製品を「導入」したのではなく、市Ｐで「開発」したツール。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#dbeafe">➕</div>
+      <div class="accord-label">
+        <div class="accord-title">情報の追加（5件）</div>
+        <div class="accord-hint">傾向：次第資料に書いてあり、録音では拾いきれなかった補足</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">夢プロジェクトの報告先</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">（記載なし）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">学校及び教育委員会へ共有した</div></div>
+        </div>
+        <div class="diff-note">次第の「教育委員会・学校へ報告済み」を反映。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">給食委員会の今後の募集主体</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">学校経由で直接募集</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">学校経由で、給食センターから直接募集</div></div>
+        </div>
+        <div class="diff-note">次第の「次年度は給食センター主体への移行」を反映。誰が募集するかが明確に。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">賠償保険の周知方針</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">（記載なし）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">対象者情報は提供されず、全体周知は実施しない方針</div></div>
+        </div>
+        <div class="diff-note">次第資料の記載を反映。各校が問い合わせを受けたときの前提になる情報。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">共有ボードの回答更新の時期</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">令和8年度の自校回答を更新する</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">年度末に令和8年度の自校回答を更新依頼する</div></div>
+        </div>
+        <div class="diff-note">今すぐの全面更新ではなく、年度末に依頼する段取りであることを明記。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">共有ボードを展開する範囲</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">役員間に展開</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">単Ｐ役員間に展開</div></div>
+        </div>
+        <div class="diff-note">市Ｐ役員か単Ｐ役員かが曖昧だったため明示。「市Ｐ」「単Ｐ」の書き分けは毎回の要チェック項目。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 実際の議事録（インライン差分） -->
+<div class="sec">
+  <div class="sec-title">実際の議事録を見る</div>
+
+  <div class="legend-box">
+    <div class="legend-item"><span class="lg-icon lg-del">×</span><span class="lg-text">修正前（誤り）</span></div>
+    <div class="legend-item"><span class="lg-icon lg-fix">○</span><span class="lg-text">修正後</span></div>
+    <div class="legend-item"><span class="lg-icon lg-add">＋</span><span class="lg-text">追記・補足</span></div>
+    <div class="legend-item"><span class="lg-icon lg-move">↕</span><span class="lg-text">位置を移動</span></div>
+  </div>
+
+  <div class="minutes-box">
+    <div class="min-h1">■ 交野市PTA協議会の運営方針と体制</div>
+
+    <div class="min-item">
+      <div class="min-item-title">運営方針</div>
+      <div class="min-item-body">活発化よりも「効率化・スリム化」を重視。必須でない活動は有志企画へ移行し、定常業務は縮減・効率化することで、子どもの安全・安心なより良い教育環境を未来に繋いでいく。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">体制変更</div>
+      <div class="min-item-body">役員中心の運営に移行し、<span class="d-del">×会計初期</span>→<span class="d-fix">○会計・書記</span>の輪番制を廃止。事務担当役員が現場の意見を吸い上げ、各校PTA（単P）<span class="d-del">×が自校活動に専念できるよう</span>→<span class="d-fix">○の自校活動が効率化し、より良くなるよう</span>支援を強化する。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">認知向上</div>
+      <div class="min-item-body">体制整備後に広報を強化し、PTAの価値・役割を可視化していく。</div>
+    </div>
+
+    <div class="min-h1">■ 業務効率化・スリム化の具体的施策</div>
+
+    <div class="min-item">
+      <div class="min-item-title">議事録作成の自動化</div>
+      <div class="min-item-body">約15,000円のAI議事録ツールを先行導入し、文字起こし・要点抽出の自動化を検証中。初期作業の負担を大幅に軽減する。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">会計のオンライン化</div>
+      <div class="min-item-body">すべての振込をオンラインへ移行。無償提供の共有ドライブを活用し、データ共有の容易化、セキュリティ強化、引継ぎの簡略化を進める。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">情報共有ツール</div>
+      <div class="min-item-body">他校の会則・総会資料・運営実態を比較できるWebアプリ（共有ボード）を整備・<span class="d-del">×導入</span>→<span class="d-fix">○開発</span>。<span class="d-del">×後日レクチャーを実施予定</span>→<span class="d-fix">○本日レクチャーを実施</span>。<br><strong>共有ボード（比較・回答管理ツール）：</strong>閲覧/編集モードで各校が回答を更新可能。カテゴリ別（会計、役員選出など）に他校の実態を比較できる。令和8年度の回答更新を依頼。<span class="d-del">×特に</span>→<span class="d-fix">○先ず</span>「<span class="d-del">×投票反映</span>→<span class="d-fix">○登校班</span>」「地区委員について」の2項目は回答を要請。URL共有で<span class="d-add">＋単P</span>役員間に展開を推奨し、継続的なフィードバックを元に改善予定。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">PTA課題アンケート</div>
+      <div class="min-item-body">課題（活動精査、組織簡素化、役員選出等）を共有し、グループディスカッションを通じて解決の糸口を探る。</div>
+    </div>
+
+    <div class="min-h1">■ 副会長委員会の活動報告と今後の予定</div>
+
+    <div class="min-item">
+      <div class="min-item-title">活動振り返り</div>
+      <div class="min-item-body"><strong>給食委員会：</strong>参加方法を「<span class="d-del">×会長指名</span>→<span class="d-fix">○輪番副会長</span>」から「保護者公募」へ変更し好評。今後は学校経由で、<span class="d-add">＋給食センターから</span>直接募集する形を検討中。<br><strong>保育サポート：</strong>領収書は公式LINEの資料フォルダへ随時アップロードする運用。精算上限はあるが残額は十分。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">今後の運用</div>
+      <div class="min-item-body">リアル集会を削減し、公式LINEでの質疑応答を基本とする。本年度のリアル集会は今回が1回目。副会長委員会での自主企画（例：着衣水泳）用の予算は確保済みで、企画提案を歓迎。</div>
+    </div>
+
+    <div class="min-h1">■ イベント協力・支援</div>
+
+    <div class="min-item">
+      <div class="min-item-title">交野のにぎわいフェスタ（10月24日・25日）</div>
+      <div class="min-item-body">市Pとしてブース（たこ焼き・スマートボール）を出店。副会長・本部役員の参加を歓迎。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">みらい学園フェスタ</div>
+      <div class="min-item-body">防災ブースの出店を市Pが人員・予算面で全面的にバックアップ。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title"><span class="d-del">×交野コート</span>→<span class="d-fix">○３中校区</span>ふれあいフェスティバル（11月28日）「逃走中」</div>
+      <div class="min-item-body">ハンター役の不足が課題。各校PTA役員や保護者からの協力者を募集中（服装：黒スーツ、サングラス）。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">夢プロジェクト「<span class="d-del">×夢の招待</span>→<span class="d-fix">○夢の正体</span>」</div>
+      <div class="min-item-body">約100名が参加し、「夢の正体は職業ではない」というテーマで好評のうちに終了。当日の様子はHPに掲載。夏休みの宿題としても動画配信とアプリ「ゆめナビ」を活用<span class="d-add">＋し、学校及び教育委員会へ共有</span>した。</div>
+    </div>
+
+    <div class="min-h1">■ 課題別ディスカッションの共有事項</div>
+
+    <div class="min-item">
+      <div class="min-item-title">次年度PTA役員の選出方法</div>
+      <div class="min-item-body">「スリム化」「役得（特典）」「テクニック（潜在候補者の掘り起こし）」「熱量（現役員の楽しむ姿勢）」の4観点が重要。ただし、「役得」は、やりすぎると批判のリスクもあるためバランスが求められる。<br><span class="d-move">↕ 独立項目から移動</span>男性役員の参加促進として、入学式などで父親へ直接参加を呼びかけることが有効。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">PTAイベントの継続性</div>
+      <div class="min-item-body">単発イベントは<span class="d-del">×必ずしも</span>引き継ぐ義務はなく、後任の負担を考慮し、その年限りと<span class="d-del">×しても良い</span>→<span class="d-fix">○すべき</span>。定例イベントとは明確に区別する。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">PTA非会員の取り扱い</div>
+      <div class="min-item-body">会員・非会員の区別なく子どもへの恩恵は平等に提供するのが基本。登校班への参加可否は学校により対応が異なる。会費を「協賛金」に名称変更しただけで未払いが減少した事例や、非会員に割高な「協力金」を設定した事例が共有されたが、根本的な解決策は未定。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">地区委員の運営と見守り活動</div>
+      <div class="min-item-body">地区による負担差や、共働き家庭の見守り参加の難しさが課題。見守り活動を廃止し、地域のボランティア（CS等で募集）に依頼している学校の事例が紹介された。</div>
+    </div>
+
+    <div class="min-h1">■ その他共有事項</div>
+
+    <div class="min-item">
+      <div class="min-item-title">大阪府公立高校入試制度の変更</div>
+      <div class="min-item-body">希望があれば大阪府教育長による説明会開催を市Pで取りまとめる。</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">個人賠償責任保険の強制解約</div>
+      <div class="min-item-body"><span class="d-del">×PTA協議会</span>→<span class="d-fix">○大阪府PTA協議会（府Ｐ）</span>脱退に伴い、市内で27名が強制解約対象となるため、各校へ苦情が来る可能性を共有。<span class="d-add">＋対象者情報は提供されず、近隣他市の例に倣い全体周知は実施しない方針。</span></div>
+    </div>
+
+    <div class="min-h1">■ 次の段取り</div>
+
+    <div class="min-item">
+      <div class="min-item-title">情報共有ツール関連</div>
+      <div class="min-item-body">・Webアプリ（共有ボード）の使い方<span class="d-del">×レクチャーを実施</span>→<span class="d-fix">○サポートを適宜実施</span><br>・<span class="d-del">×比べるボード</span>→<span class="d-fix">○共有ボード</span>の「<span class="d-del">×投票反映</span>→<span class="d-fix">○登校班</span>」「地区委員」について優先的に回答する<br>・<span class="d-add">＋年度末に</span>令和8年度の自校回答を更新<span class="d-add">＋依頼</span>する</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">イベント関連</div>
+      <div class="min-item-body">・交野のにぎわいフェスタ（<span class="d-del">×9/23</span>→<span class="d-fix">○10/23</span>搬入、<span class="d-del">×9/24-25</span>→<span class="d-fix">○10/24-25</span>当日）のシフトアンケート回答と車両提供者を募集<br>・みらい学園フェスタ防災ブースの協力者を各校で追加募集<br>・<span class="d-del">×交野コート</span>→<span class="d-fix">○３中校区</span>ふれあいフェスティバル「逃走中」のハンター協力者を各校で募集</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">運営・引継ぎ関連</div>
+      <div class="min-item-body">・保育サポートの領収書を公式LINEへ随時アップロードする<br>・新旧副会長委員会の日程調整と議題準備を進める<br>・防災イベントの実施希望校を募集する</div>
+    </div>
+
+    <div class="min-item">
+      <div class="min-item-title">その他</div>
+      <div class="min-item-body">・大阪府公立高校入試説明会の開催要望を取りまとめる<br>・イベント開催時の保険適用範囲について確認する</div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ プロモ→スライド -->
+<div class="sec">
+  <div class="promo-copy">
+    <h3>プラウドノートPROで作った議事録を<br>Claude等のAIに渡せば、こんな保護者向け概要に作り替えます ✦</h3>
+    <p>読みやすい・伝わる・共有しやすい。<br>Claudeに渡して、「配布用の概要版ビジュアル資料にして！」と言っていただくだけで、会議の内容が一瞬でビジュアル資料に変わります。<br>議事録作成から配布まで、まるごと時短。</p>
+  </div>
+
+  <div class="slide-sec-label">↓ 第4回の議事録から、実際にこんな資料ができます</div>
+
+  <div class="slide-wrap">
+    <div class="slide-inner">
+      <div class="slide-kv">
+        <h2>第4回 会長会＆<br>第1回 副会長委員会 ご報告</h2>
+        <p>2026年9月18日 ゆうゆうセンター３階研修室</p>
+        <div class="slide-date">PTA会長・副会長より保護者の皆さまへ</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">今年度のうごき</div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text">市Ｐは<strong>「効率化・スリム化」</strong>を重視。必須でない活動は有志企画へ</div></div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text">会計・書記の<strong>輪番制を廃止</strong>し、各校の会長が自校の活動に注力できる体制に</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text">AI議事録・<strong>オンライン振込</strong>・共有ドライブで事務作業を省力化</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">お知らせ</div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text">給食委員会は<strong>保護者公募</strong>に変わり好評。今後は給食センターからの募集を検討中</div></div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text">夏の夢プロジェクト<strong>「夢の正体」</strong>は約100名が参加。様子はHPで公開中</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text"><strong>大阪府公立高校の入試</strong>が大きく変わります。説明会の開催を市Ｐで取りまとめ予定</div></div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🎪 交野のにぎわいフェスタ</div>
+          <div class="event-date-badge">10月24日・25日</div>
+        </div>
+        <div class="event-desc">市Ｐとして<strong>たこ焼き・スマートボール</strong>のブースを出店します。ぜひ遊びに来てください。</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">⛑️ みらい学園フェスタ 防災ブース</div>
+          <div class="event-date-badge">11月</div>
+        </div>
+        <div class="event-desc">市Ｐが人員・予算の両面で支援する<strong>防災ブース</strong>を出店予定。遊びながら防災を学べる場をつくります。</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🕶️ ３中校区ふれあいフェスティバル「逃走中」</div>
+          <div class="event-date-badge">11月28日</div>
+        </div>
+        <div class="event-desc">子どもたちを追いかける<strong>ハンター役が不足</strong>しています。保護者の皆さまのご協力をお待ちしています（服装：黒スーツ・サングラス）。</div>
+      </div>
+
+      <div class="action-list">
+        <div class="action-title">皆さまへのお願い</div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">「逃走中」のハンター役にご協力いただける方は、各校PTAまでお声がけください</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">みらい学園フェスタの防災ブースのお手伝いも、各校で追加募集しています</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">給食委員会の募集が届いたら、ぜひ参加をご検討ください</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">高校入試の説明会をご希望の場合は、各校PTAを通じてお知らせください</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 締め -->
+<div class="closing">
+  <div class="closing-icon">🤝</div>
+  <h3>単Pの負担を、みんなで軽くしていきましょう</h3>
+  <p>録音して、AIに渡して、数か所確認するだけ。その積み重ねが、会長・副会長・委員のみなさんの時間と心の余裕につながります。<br><br>一緒に、もっとラクな運営のかたちを考えていきましょう！！</p>
+</div>
+
+</div>
+<script>
+function toggle(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  btn.setAttribute('aria-expanded',String(!open));
+}
+</script>
+</body>
+</html>
