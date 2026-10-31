@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第5回 会長会 議事録＆AI精度レポート（今回は課題が残りました）</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;background:#f2f0ec;color:#1a1a1a;line-height:1.6;-webkit-text-size-adjust:100%}
+.page{max-width:680px;margin:0 auto;padding:2rem 1.125rem 5rem}
+
+/* HERO */
+.hero{background:#0f172a;border-radius:18px;padding:2.25rem 1.75rem 2rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:#1e3a5f;opacity:.5}
+.hero-tag{display:inline-block;background:#f59e0b;color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 10px;border-radius:999px;margin-bottom:.875rem}
+.hero h1{font-size:clamp(22px,5.5vw,32px);font-weight:800;color:#fff;line-height:1.2;margin-bottom:.75rem}
+.hero h1 em{color:#38bdf8;font-style:normal}
+.hero-sub{font-size:13px;color:#94a3b8;line-height:1.7}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid #1e3a5f}
+.hero-chip{display:inline-flex;align-items:center;gap:5px;background:#1e293b;color:#94a3b8;font-size:11px;padding:5px 10px;border-radius:999px;border:1px solid #334155}
+.hero-chip strong{color:#e2e8f0;font-weight:600}
+
+/* SECTION */
+.sec{margin-top:2rem}
+.sec-title{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:.75rem}
+
+/* FLOW */
+.flow{display:flex;flex-direction:column}
+.flow-row{display:flex;gap:0;align-items:stretch}
+.flow-line{display:flex;flex-direction:column;align-items:center;width:40px;flex-shrink:0}
+.f-dot{width:28px;height:28px;border-radius:50%;background:#0f172a;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.f-bar{flex:1;width:2px;background:#e5e7eb;margin:4px 0}
+.flow-row:last-child .f-bar{display:none}
+.flow-body{flex:1;padding:.75rem 0 .875rem}
+.f-title{font-size:13px;font-weight:700;color:#111}
+.f-sub{font-size:12px;color:#888;margin-top:2px;line-height:1.5}
+.f-badge{display:inline-block;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;margin-top:5px}
+.f-warn{display:block;background:#fef3c7;color:#92400e;font-size:11px;font-weight:600;padding:5px 10px;border-radius:8px;margin-top:6px;line-height:1.5}
+
+/* VERDICT */
+.verdict{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:1.125rem 1.125rem 1rem;margin-bottom:1rem}
+.verdict-tag{display:inline-block;font-size:10px;font-weight:700;background:#ea580c;color:#fff;padding:2px 9px;border-radius:999px;margin-bottom:.5rem}
+.verdict h3{font-size:15px;font-weight:800;color:#7c2d12;line-height:1.45;margin-bottom:.625rem}
+.verdict ul{list-style:none}
+.verdict li{font-size:12.5px;color:#7c2d12;line-height:1.65;padding-left:1.1em;position:relative;margin-bottom:.375rem}
+.verdict li::before{content:'●';position:absolute;left:0;font-size:8px;top:.55em;color:#ea580c}
+
+/* STAGES */
+.stage-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.stage{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:.75rem .7rem}
+.stage-no{font-size:10px;font-weight:700;color:#94a3b8;letter-spacing:.04em}
+.stage-name{font-size:12px;font-weight:700;color:#111;margin:2px 0 6px;line-height:1.35}
+.stage-num{font-size:11.5px;color:#444;line-height:1.55}
+.stage-res{margin-top:6px;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:999px;display:inline-block}
+.res-ng{background:#fee2e2;color:#b91c1c}
+.res-mid{background:#fef3c7;color:#92400e}
+.res-ok{background:#dcfce7;color:#15803d}
+
+/* ACCORDION */
+.accord{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:10px}
+.accord-head{width:100%;background:none;border:none;padding:.875rem 1rem;display:flex;align-items:center;gap:10px;cursor:pointer;text-align:left;font-family:inherit}
+.accord-head:hover{background:#f9fafb}
+.accord-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.accord-label{flex:1}
+.accord-title{font-size:13px;font-weight:700;color:#111}
+.accord-hint{font-size:11px;color:#888;margin-top:2px}
+.accord-chev{font-size:16px;color:#aaa;transition:transform .25s;flex-shrink:0;font-style:normal}
+.accord-head[aria-expanded="true"] .accord-chev{transform:rotate(180deg)}
+.accord-body{display:none;border-top:1px solid #f0f0f0;padding:1rem}
+.accord-body.open{display:block}
+
+/* ACCURACY */
+.acc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+.acc-card{background:#fff;border-radius:10px;padding:.875rem .75rem;text-align:center;border:1px solid #e5e7eb}
+.acc-n{font-size:26px;font-weight:800;line-height:1}
+.acc-l{font-size:11px;color:#888;margin-top:3px}
+.trend{font-size:11px;margin-top:6px;padding:2px 8px;border-radius:999px;display:inline-block;font-weight:600}
+.t-red{background:#fee2e2;color:#b91c1c}
+.t-amber{background:#fef3c7;color:#92400e}
+.t-blue{background:#dbeafe;color:#1d4ed8}
+.good-note{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:.7rem 1rem;font-size:12px;color:#166534;line-height:1.6;margin-bottom:1rem}
+.good-note strong{color:#14532d}
+.scope-note{font-size:11px;color:#888;line-height:1.6;margin-bottom:1rem}
+
+/* DIFF CARD */
+.diff-card{background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;border:1px solid #e5e7eb}
+.diff-head{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;border-bottom:1px solid #f0f0f0}
+.badge-diff{font-size:10px;font-weight:700;padding:3px 8px;border-radius:999px;flex-shrink:0}
+.badge-err{background:#fee2e2;color:#b91c1c}
+.badge-mod{background:#fef3c7;color:#92400e}
+.badge-add{background:#dbeafe;color:#1d4ed8}
+.diff-label{font-size:13px;font-weight:600;color:#111}
+.diff-compare{display:grid;grid-template-columns:1fr 1fr}
+.diff-col{padding:.75rem 1rem;font-size:13px;line-height:1.5}
+.diff-col-l{border-right:1px solid #f0f0f0}
+.col-label{font-size:10px;font-weight:700;letter-spacing:.03em;margin-bottom:4px}
+.col-before{background:#fffafa}.col-before .col-label{color:#b91c1c}.col-before .col-val{color:#7f1d1d;text-decoration:line-through;text-decoration-color:#fca5a5}
+.col-after{background:#f0fdf7}.col-after .col-label{color:#059669}.col-after .col-val{color:#064e3b}
+.col-check{background:#fffbeb}.col-check .col-label{color:#b45309}.col-check .col-val{color:#78350f}
+.diff-note{padding:.6rem 1rem;font-size:11px;color:#666;background:#fafafa;border-top:1px solid #f0f0f0;line-height:1.5}
+.plain-val{text-decoration:none!important}
+
+/* LEGEND + INLINE DIFF */
+.legend-box{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:.875rem 1rem;display:flex;flex-wrap:wrap;gap:14px;margin-bottom:1rem}
+.legend-item{display:flex;align-items:center;gap:6px}
+.lg-icon{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.lg-text{font-size:11px;color:#666}
+.lg-del{background:#fee2e2;color:#b91c1c}
+.lg-fix{background:#dcfce7;color:#15803d}
+.lg-add{background:#dbeafe;color:#1d4ed8}
+.lg-move{background:#ede9fe;color:#6d28d9}
+.lg-chk{background:#fef3c7;color:#92400e}
+
+.d-del{background:#fee2e2;color:#b91c1c;border-radius:3px;padding:0 3px;text-decoration:line-through;text-decoration-color:#f87171}
+.d-fix{background:#dcfce7;color:#15803d;border-radius:3px;padding:0 3px;font-weight:600}
+.d-add{background:#dbeafe;color:#1d4ed8;border-radius:3px;padding:0 3px;font-weight:600}
+.d-chk{background:#fef3c7;color:#92400e;border-radius:3px;padding:0 3px;font-weight:600}
+.d-move{display:inline-block;background:#ede9fe;color:#6d28d9;font-size:10px;font-weight:700;padding:1px 7px;border-radius:999px;margin-right:6px;vertical-align:middle}
+
+/* MINUTES */
+.minutes-box{background:#fff;border-radius:12px;border:1px solid #e5e7eb;padding:1.25rem}
+.min-h1{font-size:13px;font-weight:700;color:#111;margin:1.25rem 0 .5rem;padding-bottom:4px;border-bottom:2px solid #e5e7eb}
+.min-h1:first-child{margin-top:0}
+.min-item{margin-bottom:.875rem}
+.min-item-title{font-size:13px;font-weight:700;color:#111;margin-bottom:2px}
+.min-item-body{font-size:13px;color:#444;line-height:1.85}
+.concl{display:block;margin-top:2px;font-weight:700;color:#0f172a}
+.mtable{width:100%;border-collapse:collapse;margin-top:.5rem;font-size:12px}
+.mtable th{background:#f8fafc;color:#64748b;font-size:10px;text-align:left;padding:5px 8px;border-bottom:1px solid #e5e7eb}
+.mtable td{padding:6px 8px;border-bottom:1px solid #f1f5f9;color:#444;vertical-align:top;line-height:1.6}
+.mtable td:first-child{white-space:normal;font-weight:700;color:#111;width:5.5em}
+
+/* PROMO COPY */
+.promo-copy{background:#0f172a;border-radius:14px;padding:1.5rem 1.375rem;margin-bottom:1rem}
+.promo-copy h3{font-size:clamp(14px,3.5vw,17px);font-weight:800;color:#fff;line-height:1.5;margin-bottom:.625rem}
+.promo-copy p{font-size:13px;color:#94a3b8;line-height:1.7}
+.slide-sec-label{text-align:center;font-size:12px;color:#888;margin-bottom:.75rem;letter-spacing:.04em}
+
+/* SLIDE */
+.slide-wrap{background:#f8fafc;border-radius:16px;overflow:hidden;margin-top:.75rem;border:1px solid #e2e8f0}
+.slide-inner{padding:1.5rem;display:flex;flex-direction:column;gap:10px}
+.slide-kv{background:#0ea5e9;border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.slide-kv::after{content:'📋';position:absolute;right:16px;bottom:-4px;font-size:52px;opacity:.2}
+.slide-kv h2{font-size:clamp(16px,4vw,22px);font-weight:800;color:#fff;line-height:1.3;margin-bottom:.5rem}
+.slide-kv p{font-size:11px;color:#bae6fd;line-height:1.5}
+.slide-date{font-size:10px;background:rgba(255,255,255,.25);color:#fff;padding:2px 10px;border-radius:999px;display:inline-block;margin-top:.5rem}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.info-card-title{font-size:10px;color:#94a3b8;margin-bottom:.5rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.info-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:5px}
+.info-dot{width:6px;height:6px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.dot-green{background:#22c55e}.dot-amber{background:#f59e0b}.dot-blue{background:#3b82f6}
+.info-text{font-size:12px;color:#374151;line-height:1.45}
+.event-card{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.event-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem;gap:8px;flex-wrap:wrap}
+.event-name{font-size:13px;font-weight:700;color:#111}
+.event-date-badge{font-size:10px;font-weight:700;background:#0ea5e9;color:#fff;padding:2px 9px;border-radius:999px}
+.event-desc{font-size:12px;color:#4b5563;line-height:1.55}
+.action-list{background:#fff;border-radius:10px;padding:.875rem 1rem;border:1px solid #e5e7eb}
+.action-title{font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem}
+.action-item{display:flex;align-items:flex-start;gap:8px;margin-bottom:6px}
+.action-item:last-child{margin-bottom:0}
+.check-box{width:15px;height:15px;border-radius:3px;border:1.5px solid #d1d5db;flex-shrink:0;margin-top:2px}
+.action-text{font-size:12px;color:#374151;line-height:1.45}
+
+/* CLOSING */
+.closing{background:#0f172a;border-radius:14px;padding:1.75rem 1.5rem;margin-top:1.5rem;text-align:center}
+.closing-icon{font-size:32px;margin-bottom:.75rem}
+.closing h3{font-size:clamp(15px,4vw,19px);font-weight:800;color:#fff;line-height:1.4;margin-bottom:.75rem}
+.closing p{font-size:13px;color:#94a3b8;line-height:1.75}
+
+@media(max-width:480px){
+  .page{padding:1.125rem .875rem 4rem}
+  .hero{padding:1.75rem 1.25rem 1.5rem;border-radius:14px}
+  .acc-row{gap:7px}
+  .stage-row{grid-template-columns:1fr}
+  .info-grid{grid-template-columns:1fr}
+  .diff-compare{grid-template-columns:1fr}
+  .diff-col-l{border-right:none;border-bottom:1px solid #f0f0f0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ① HERO -->
+<div class="hero">
+  <div class="hero-tag">✦ AI議事録 精度レポート｜今回は課題が残りました</div>
+  <h1>第5回 会長会<br><em>議事録＆AI精度レポート</em></h1>
+  <p class="hero-sub">今回はPlaud Note PROの自動議事録を、そのままでは使えませんでした。うまくいかなかった点も含めて、無修正版・手修正版・最終版の差を正直に公開します。</p>
+  <div class="hero-meta">
+    <div class="hero-chip">📅 <strong>2026年10月16日</strong></div>
+    <div class="hero-chip">📍 <strong>ゆうゆうセンター３階研修室</strong></div>
+    <div class="hero-chip">👥 <strong>市P役員5名・単P会長9名（欠席1名）</strong></div>
+  </div>
+</div>
+
+<!-- ② 使い方フロー -->
+<div class="sec">
+  <div class="sec-title">おすすめの使い方（と、今月つまずいた所）</div>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">1</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">会議を録音</div>
+        <div class="f-sub">テーブルに置いてワンタッチでスタート。話者名を事前登録しておくとより精度UP。</div>
+        <span class="f-warn">今月：出席14名のうち、名前で識別できたのは9名でした</span>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">2</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">アプリで文字起こし・議事録生成</div>
+        <div class="f-sub">録音データを転送するだけで、AIが自動で文字起こし＆要約。</div>
+        <span class="f-warn">今月：約45見出し・51項目の長大な出力になり、そのままでは配れませんでした</span>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">3</div><div class="f-bar"></div></div>
+      <div class="flow-body">
+        <div class="f-title">マイページで単語・話者を修正</div>
+        <div class="f-sub">誤変換をその場で直す。この修正がAIの学習データになり、次回から誤りが減っていく。</div>
+        <span class="f-badge">これが精度向上の鍵</span>
+        <span class="f-warn">今月：本文は直せたものの、末尾の「次の取り決め」まで手が回りませんでした</span>
+      </div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-line"><div class="f-dot">4</div></div>
+      <div class="flow-body">
+        <div class="f-title">数値・固有名詞だけ目視確認して配布</div>
+        <div class="f-sub">金額・日付・学校名・イベント名など事実に関わる部分のみ確認。</div>
+        <span class="f-warn">今月：確認だけでは足りず、出席者名簿・次第と照らしてClaudeに再要約してもらいました</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ③ 精度レポート -->
+<div class="sec">
+  <div class="sec-title">第5回の議事録 精度レポート</div>
+
+  <div class="verdict">
+    <div class="verdict-tag">今月の結論</div>
+    <h3>PLAUD出力の議事録が使い物にならず、Claudeでの再要約が必要でした</h3>
+    <ul>
+      <li>出席14名のうち名前が付いたのは9名。残りは「Speaker」表記か名簿から欠落し、<strong>どの学校の話か追えない</strong>箇所が出ました。</li>
+      <li>人名8件・校名・数値（<strong>たこせん1,200枚が「たこ焼き200枚」</strong>）など、事実に関わる誤りが本文と「次の取り決め」に散らばっていました。</li>
+      <li>手修正で本文は直せましたが、最終的には<strong>出席者名簿と次第をもとにClaudeに再要約</strong>して仕上げています。</li>
+    </ul>
+  </div>
+
+  <div class="stage-row">
+    <div class="stage">
+      <div class="stage-no">STEP 1</div>
+      <div class="stage-name">Plaud 無修正</div>
+      <div class="stage-num">約13,000字／約45見出し<br>次の取り決め51項目<br>AI提案15項目</div>
+      <span class="stage-res res-ng">そのままでは配れない</span>
+    </div>
+    <div class="stage">
+      <div class="stage-no">STEP 2</div>
+      <div class="stage-name">手修正</div>
+      <div class="stage-num">約30か所を修正<br>名簿・本文は改善<br>次の取り決めは未着手</div>
+      <span class="stage-res res-mid">人名・数値が残った</span>
+    </div>
+    <div class="stage">
+      <div class="stage-no">STEP 3</div>
+      <div class="stage-name">Claude再要約</div>
+      <div class="stage-num">約3,000字／12議題<br>お願い事項7項目<br>決定事項3件を明記</div>
+      <span class="stage-res res-ok">配布できる形に</span>
+    </div>
+  </div>
+
+  <div class="acc-row">
+    <div class="acc-card"><div class="acc-n" style="color:#ef4444">9</div><div class="acc-l">要確認の誤り</div><span class="trend t-red">人名・校名・数値</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#f59e0b">5</div><div class="acc-l">表現・構造の差</div><span class="trend t-amber">圧縮・自動提案</span></div>
+    <div class="acc-card"><div class="acc-n" style="color:#3b82f6">5</div><div class="acc-l">情報の追加</div><span class="trend t-blue">出欠・進捗表</span></div>
+  </div>
+
+  <div class="good-note">✓ <strong>使えた部分もありました：</strong>次回会長会（11/11）、12/18の懇親会、機材搬入（10/23 17時）、みらい学園フェスタ（11/7）、補助ルール（5万円まで無条件・超過分1/2・上限20万円）の日付と金額は、無修正版の時点で正しく出ていました。「ゆうゆうセンター」も今月は最初から正しい表記でした。</div>
+
+  <div class="scope-note">※件数はPlaudの会議メモ出力（無修正版）と、手修正版・再要約版との比較です。全文文字起こしは件数に含めていません（担当者の所感として、こちらも活用できませんでした）。</div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fee2e2">⚠️</div>
+      <div class="accord-label">
+        <div class="accord-title">要確認の誤り（9件）</div>
+        <div class="accord-hint">傾向：話者・人名・校名の取り違えと、数値・年の誤り。趣旨が逆になった箇所も</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">話者識別</span><span class="diff-label">出席者の一覧</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">[Speaker 4] [Speaker 5] [Speaker 8] ほか計12件</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">市P役員5名＋単P会長9名＝14名（辻田・奥田・和久田・伊藤・立山を追記）</div></div>
+        </div>
+        <div class="diff-note">名前が付いたのは9名。3名は「Speaker」表記、2名は一覧に出てきませんでした。「Speaker」表記は一覧と本文を合わせて6カ所。「[Speaker 5]の学校」「[Speaker 8]の学校」では学校ごとの進捗が追えない状態でした。一覧は手修正で直せたものの、「次の取り決め」に1カ所残っていました。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">数値・品名</span><span class="diff-label">にぎわいフェスタの販売目標</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">たこ焼き200枚</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">たこせん1,200枚</div></div>
+        </div>
+        <div class="diff-note">次第には「たこせん 1,200枚」と明記。桁と品名が同時に違っていました（本文と「次の取り決め」の2カ所）。手修正版でも直っておらず、今月いちばん危険な誤りです。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">年の誤り</span><span class="diff-label">防災キャンプの準備時期</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">2026年2月〜3月を想定し、2025年12月〜2026年1月頃から</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">2〜3月に実施するなら、12〜1月ごろから準備</div></div>
+        </div>
+        <div class="diff-note">会議は2026年10月。どちらの年も過去になっていました。手修正版にも残っていたため、再要約で年を外して解消。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">校名・地名</span><span class="diff-label">学校名の表記ゆれ</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">未来学園／星小／倉小／クラシック</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">みらい学園／星田小／倉治小／倉治区</div></div>
+        </div>
+        <div class="diff-note">「未来学園」は同じ議事録内に正しい「みらい学園」も6回出ており、表記が混在。手修正で「クラシック→倉治区」は直りましたが、「未来学園」は2カ所残っていました。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">事業名</span><span class="diff-label">放課後の見守りボランティア</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">スペース安全ボランティア</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">フリスぺ（フリースペース）安全ボランティア</div></div>
+        </div>
+        <div class="diff-note">次第の「フリスぺ」を知らないと別の事業に見えます（4カ所）。手修正で1カ所だけ直り、3カ所が残りました。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">人名</span><span class="diff-label">出席者名簿にない人名</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">田山・仙川・大崎・角田・小田・松原・河原・前田（各「さん」）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">再要約版では掲載しない</div></div>
+        </div>
+        <div class="diff-note">8名分が出席者名簿に存在せず、聞き違いとみられます。手修正後も5名分が残り、「次の取り決め」では誰への依頼なのか読み取れませんでした。録音からは正しい名前を確定できていません。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">用語</span><span class="diff-label">「逃走中」の役名</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">審判役</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">ハンター役</div></div>
+        </div>
+        <div class="diff-note">3カ所のうち手修正で直ったのは1カ所。残る2カ所（「次の取り決め」と「AI提案」）は「審判役」のままでした。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-err">趣旨が逆</span><span class="diff-label">役員選出を早めるデメリット</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">もう1年続投となるケースがある</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">現会長が「もう1年やりたい」と思っても、選出が終わっていて間に合わない</div></div>
+        </div>
+        <div class="diff-note">「続投が増える」と「続投したくてもできない」では意味が逆です。同じ箇所の「会長を後から選ぶ方式だと〜」も、実際は「会長と他の役員を分けて選ぶと手が挙がりやすい」という趣旨でした。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-err">版で不一致</span><span class="diff-label">みらい学園フェスタに参加する市P役員の人数</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">5〜6名</div></div>
+          <div class="diff-col col-check"><div class="col-label">手修正版／再要約版</div><div class="col-val plain-val">手修正版は6〜7名、再要約版は5〜6名</div></div>
+        </div>
+        <div class="diff-note">3つの版で数字が割れました。録音と資料から確定できていないため、人数は要確認として残しています。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#fef3c7">📝</div>
+      <div class="accord-label">
+        <div class="accord-title">表現・構造の差（5件）</div>
+        <div class="accord-hint">傾向：会議で出ていない自動提案と、情報量の大幅な圧縮</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">自動生成</span><span class="diff-label">「AI提案」15項目</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">「会議で結論に至らなかった問題」15項目</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">掲載しない</div></div>
+        </div>
+        <div class="diff-note">会議の結論ではなく、AIが「未決定」「不明確」と推測して並べた内容です。決定事項と並ぶと誤解を招くため、議事録本体には載せていません（手修正版には残っていました）。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">構造</span><span class="diff-label">「次の取り決め」の整理</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">51項目</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">お願い事項7項目（担当・期限つき）</div></div>
+        </div>
+        <div class="diff-note">51項目のうち19項目が「検討する」「確認する」「整理する」型で、担当も期限も不明でした。実際に各校へお願いする内容だけを表にまとめ直しています。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">分量</span><span class="diff-label">議事録全体のボリューム</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">約13,000字・約45見出し</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">約3,000字・12議題</div></div>
+        </div>
+        <div class="diff-note">読める長さにはなりましたが、会長トーク以外の討議（会計・会計監査の役割、本の寄贈、掲示板設置など）は配布版から外れています。詳細な討議内容は手修正版に残っています。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-mod">削除</span><span class="diff-label">手修正で削除・差し替えた記述</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">「会費を上げると会長が陰口を言われる」「学校備品の寄贈は問題ないと確認」など</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">削除</div></div>
+        </div>
+        <div class="diff-note">手修正の段階で約20行を削除・差し替えています。発言の主が分からない断片（「[Speaker 5]の学校では…」など）や、会議の結論として書かれた一文が含まれていました。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-mod">ニュアンス</span><span class="diff-label">予算の方針と会計監査の役割</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">繰越金を残さない方針／使途について指摘する立場ではない</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">残すことより今必要なものに支出する方針／予算編成や内容について指摘する立場ではない（目的外使用等は判断する）</div></div>
+        </div>
+        <div class="diff-note">どちらも手修正で言い直した箇所。「残さない」と「残すことより必要な支出を優先」では、意図の強さが変わります。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#dbeafe">➕</div>
+      <div class="accord-label">
+        <div class="accord-title">情報の追加（5件）</div>
+        <div class="accord-hint">傾向：録音では拾いきれなかった出欠と、整理し直した進捗</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">欠席者</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">（記載なし）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">欠席：中野（藤が尾小）</div></div>
+        </div>
+        <div class="diff-note">再要約で追記。各校の進捗表でも「欠席のため確認できず」と区別しています。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">各校の役員選出の進捗</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">学校名が不明な発言の羅列</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">10校の状況を表に整理</div></div>
+        </div>
+        <div class="diff-note">「Speaker」表記で学校が特定できなかったため、会議での発言をもとに学校ごとに組み直しました。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">フリスぺ募集チラシの印刷代</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">予算は子育て支援課や市Pからもでない</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">印刷代は部数に応じて各PTAが負担する</div></div>
+        </div>
+        <div class="diff-note">誰が負担するのかが抜けていたため追記。各校が部数を回答する前提になる情報です。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px;margin-bottom:10px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">役員選出を早めるメリット</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">（デメリットのみ）</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">見つからないときの対応時間が確保される</div></div>
+        </div>
+        <div class="diff-note">手修正で追記。「メリット・デメリット」の見出しなのに、デメリットしか出力されていませんでした。</div>
+      </div>
+      <div class="diff-card" style="border:none;border-radius:8px">
+        <div class="diff-head"><span class="badge-diff badge-add">補足</span><span class="diff-label">12月懇親会の会場の考え方</span></div>
+        <div class="diff-compare">
+          <div class="diff-col diff-col-l col-before"><div class="col-label">無修正</div><div class="col-val">電車で来やすい場所に移している</div></div>
+          <div class="diff-col col-after"><div class="col-label">修正後</div><div class="col-val">全校区から電車で来やすい場所に移している</div></div>
+        </div>
+        <div class="diff-note">手修正で追記。再要約版では「会場は未定」の記載にとどめています。</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accord">
+    <button class="accord-head" onclick="toggle(this)" aria-expanded="false">
+      <div class="accord-icon" style="background:#ede9fe">🔧</div>
+      <div class="accord-label">
+        <div class="accord-title">次回に向けた対策（案）</div>
+        <div class="accord-hint">今月の誤りから、先に打てる手を整理しました</div>
+      </div>
+      <i class="accord-chev">▾</i>
+    </button>
+    <div class="accord-body">
+      <div class="min-item">
+        <div class="min-item-title">話者の事前登録</div>
+        <div class="min-item-body">今月識別できなかった辻田・奥田・和久田・伊藤・立山の5名を追加登録する。</div>
+      </div>
+      <div class="min-item">
+        <div class="min-item-title">単語登録の追加</div>
+        <div class="min-item-body">みらい学園／星田小／倉治小／倉治区／フリスぺ（フリースペース安全ボランティア）／ハンター役／たこせん。</div>
+      </div>
+      <div class="min-item">
+        <div class="min-item-title">確認する範囲を広げる</div>
+        <div class="min-item-body">数値・日付・固有名詞に加えて、「次の取り決め」と「AI提案」も確認対象にする。今月は本文を直した後に、この2つが残りました。</div>
+      </div>
+      <div class="min-item">
+        <div class="min-item-title">会議の進め方（案）</div>
+        <div class="min-item-body">グループ討議や会長トークでは、発言の冒頭に学校名と名前を一言添えてもらう。話者識別が難しい場面で効く可能性があります。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ④ 実際の議事録（インライン差分） -->
+<div class="sec">
+  <div class="sec-title">実際の議事録を見る（再要約版をベースに、無修正との差を表示）</div>
+
+  <div class="legend-box">
+    <div class="legend-item"><span class="lg-icon lg-del">×</span><span class="lg-text">修正前（誤り）</span></div>
+    <div class="legend-item"><span class="lg-icon lg-fix">○</span><span class="lg-text">修正後</span></div>
+    <div class="legend-item"><span class="lg-icon lg-add">＋</span><span class="lg-text">追記・補足</span></div>
+    <div class="legend-item"><span class="lg-icon lg-move">↕</span><span class="lg-text">位置を移動・集約</span></div>
+    <div class="legend-item"><span class="lg-icon lg-chk">？</span><span class="lg-text">要確認（版で不一致）</span></div>
+  </div>
+
+  <div class="minutes-box">
+    <div class="min-h1">■ 開催概要</div>
+    <div class="min-item">
+      <div class="min-item-body">2026年10月16日（金）19:00〜21:10／ゆうゆうセンター３階研修室<br>
+      <strong>出席：</strong>市P役員：勇・松浦・杉田・大矢・畑山／単P会長：谷口（みらい学園）・角（二中）・中村（倉治小）・<span class="d-del">×[Speaker 4]・[Speaker 5]・[Speaker 8]</span>→<span class="d-fix">○辻田（郡津小）・奥田（三中）・和久田（星田小）・伊藤（旭小）・立山（私市小）</span>・桑原（岩船小）<br>
+      <strong>欠席：</strong><span class="d-add">＋中野（藤が尾小）</span></div>
+    </div>
+
+    <div class="min-h1">■ 本日の決定事項</div>
+    <div class="min-item">
+      <div class="min-item-title">④ 環境フェスタのチラシ配布協力</div>
+      <div class="min-item-body">異議なしで承認。11/11の会長会で学校ごとにチラシを受け取り、各校で配布。</div>
+    </div>
+    <div class="min-item">
+      <div class="min-item-title">⑧ 防災キャンプ等の補助ルール</div>
+      <div class="min-item-body">満場一致で可決。5万円までは無条件で補助、5万円を超えた分は1/2補助（上限20万円）。</div>
+    </div>
+    <div class="min-item">
+      <div class="min-item-title">⑩ 高校入試制度の説明会</div>
+      <div class="min-item-body">市P独自の開催は見送り。動画などで中学生・保護者向けに案内する。</div>
+    </div>
+
+    <div class="min-h1">■ ① 会議日程の再案内</div>
+    <div class="min-item">
+      <div class="min-item-body">・次回は11月11日（水）（いつもの金曜ではないので注意）、ゆうゆうセンター３階研修室。<br>
+      ・12月は18日（金）。会長会を30分ほど行い、同じ会場で懇親会。会場は未定で、事前に出欠を確認して決める。<br>
+      ・情報交換会の予算を持っている単Pもあるので、各校の会計に確認しておく。</div>
+    </div>
+
+    <div class="min-h1">■ ② 次年度役員選出のための資料提供</div>
+    <div class="min-item">
+      <div class="min-item-body">・共有フォルダに「市Pでの役割」PDF、役員募集案内（やりがい版・片面版）、Googleフォームのひな形、CS（学校運営協議会）の説明資料を置いた。コピーして自由に使える。<br>
+      ・今年度から輪番制や出向委員会を廃止したので、昨年の資料をそのまま使うと負担が大きく見えてしまう。新しい資料を参考にしてほしい。<br>
+      ・手が挙がりやすくなる工夫：「いなければやる」など段階のある回答にする／匿名で現役役員に質問できる場を作る／紙で配り、担任の先生から「必ず保護者に渡して」と声をかけてもらう。</div>
+    </div>
+
+    <div class="min-h1">■ ③ 次年度役員選出 苦戦校支援／各校の進捗</div>
+    <div class="min-item">
+      <div class="min-item-body">・苦戦しそうな学校は市Pに相談を。グループチャットでの個別相談、他校の事例紹介、募集資料の見直しなどを支援する。<br>
+      ・<span class="d-del">×会長を後から選ぶ方式だと、会長に当たるのを恐れて立候補が減る</span>→<span class="d-fix">○会長と他の役員を分けて選ぶと手が挙がりやすい</span>。早く決まりすぎると、現会長が「もう1年やりたい」と思っても<span class="d-del">×もう1年続投となるケースがある</span>→<span class="d-fix">○間に合わない</span>という面もある。<br>
+      <span class="d-add">＋各校の進捗を表に整理</span></div>
+      <table class="mtable">
+        <tr><th>学校</th><th>状況・概要</th></tr>
+        <tr><td><span class="d-del">×倉小</span>→<span class="d-fix">○倉治小</span></td><td>ほぼ決定。9月中に選出をほぼ終えた。立候補があった。</td></tr>
+        <tr><td>私市小</td><td>決定。「PTAがなくなると？」の手紙が効いたのか、次年度メンバーが決定。</td></tr>
+        <tr><td>星田小</td><td>未定。</td></tr>
+        <tr><td>岩船小</td><td>会長は立候補あり。会長だけ先に選ぶ方式。役員はこれから。</td></tr>
+        <tr><td>二中</td><td>会長は続投の意向（角会長が立候補を表明）。ほかの役員は来月から、小学校で役員を経験した人に声をかける。</td></tr>
+        <tr><td>三中</td><td>未定。会長選出に苦戦しており、杉田氏から個別相談対応を提案。</td></tr>
+        <tr><td>郡津小</td><td>途中。一部の役が未定。選考担当が追加の声かけを検討中。</td></tr>
+        <tr><td>旭小</td><td>未定。</td></tr>
+        <tr><td>みらい学園</td><td>途中。本日より募集。</td></tr>
+        <tr><td>藤が尾小</td><td>欠席のため確認できず。</td></tr>
+      </table>
+    </div>
+
+    <div class="min-h1">■ ④ 環境フェスタのチラシ配布協力</div>
+    <div class="min-item">
+      <div class="min-item-body">・市が実行委員会から抜け、市民団体だけで運営することになった。これまで実行委員が全校を回って配っていたが、その負担が大きいため協力の依頼があった。<br>
+      ・学校ごとにまとめたチラシを11/11の会長会で持ち帰り、各校のいつもの方法で配る。配布は3月までで、3学期の始業式ごろがよいとの意見があった（配る時期の希望は運営側に確認する）。<span class="concl">▶ 結論：異議なしで承認。みらい学園は量が多いため、受け取り方法を別に調整する。</span></div>
+    </div>
+
+    <div class="min-h1">■ ⑤ <span class="d-del">×スペース安全ボランティア</span>→<span class="d-fix">○フリスぺ安全ボランティア</span>募集チラシの取りまとめ発注</div>
+    <div class="min-item">
+      <div class="min-item-body">・子育て支援課の確認が済んだチラシを、市Pがまとめて発注する（各校で個別に発注するより安くなる）。必要部数はフォームで10/30（金）までに回答。印刷代は<span class="d-add">＋部数に応じて各PTAが</span>負担する。<br>
+      ・自治会の回覧分なども含めて回答してよい。まちコミでの配信やデータでの利用もできる。希望数を集計した後に単価を伝え、発注するかどうかを決めてもらう。<br>
+      ・「一度家に帰ってから参加」というルールの学校は低学年が参加しにくい。このルールをなくせないか学校と相談する方法もある（岩船小では廃止した）。</div>
+    </div>
+
+    <div class="min-h1">■ ⑥ みらい学園フェスタ（11/7）の応援</div>
+    <div class="min-item">
+      <div class="min-item-body">・11時〜15時に防災ブースを出す（クイズラリー、保存食の試食）。市P役員は<span class="d-chk">？5〜6名（手修正版は6〜7名）</span>が参加予定。<br>
+      ・会長会のメンバーも1時間だけなど、来られる時間だけの参加で歓迎。シフトは予定がそろってから組む。</div>
+    </div>
+
+    <div class="min-h1">■ ⑦ 三中フェスタ（11/28）のハンター申込み</div>
+    <div class="min-item">
+      <div class="min-item-body">・「逃走中」のハンター役を募集。午後（昨年は13:40〜15:00）に3回行うので、13時〜16時ごろで予定を空けてほしい。時間が決まり次第、フォームで募集する。<br>
+      ・<span class="d-del">×審判役は原則社会人</span>→<span class="d-fix">○ハンター役は社会人が原則</span>。高校生は保護者と一緒なら参加できる。</div>
+    </div>
+
+    <div class="min-h1">■ ⑧ 防災キャンプ実施校の再募集と補助金額の決定</div>
+    <div class="min-item">
+      <div class="min-item-body">・実施校の再募集はフェスタが終わってから声をかける。<span class="d-del">×2026年2月〜3月を想定し、2025年12月〜2026年1月頃から動き出す</span>→<span class="d-fix">○2〜3月に実施するなら、12〜1月ごろから準備が必要</span>。<br>
+      ・補助のルールが決まっていなかったため、今回決めた。今年度は<span class="d-del">×未来学園</span>→<span class="d-fix">○みらい学園</span>の防災ブースと<span class="d-del">×星小</span>→<span class="d-fix">○星田小</span>の防災キャンプに使う予定。<span class="concl">▶ 結論：満場一致で可決。5万円までは無条件で補助、5万円を超えた分は1/2補助（上限20万円）。</span>
+      ・来年度の補助は次年度の役員が予算を組んで決めるので、今の時点では約束できない。各校で単発のイベント費などを予算に入れておくとよい。</div>
+    </div>
+
+    <div class="min-h1">■ ⑨ 会長トーク（倉治小・中村会長／岩船小・桑原会長）</div>
+    <div class="min-item">
+      <div class="min-item-body">・中村会長：会長になったきっかけ、消防団の活動、地域とPTAの関わり、副会長の体制（学校内担当と外部担当の分け方）の見直し、会費値下げ後の財政の心配などを話した。<br>
+      ・桑原会長：「子どもの主体性を育てる」をテーマに、紙飛行機コンテストなどの企画を考えている。地域のイベントやPTAの活動を児童に知ってもらうための掲示板の設置も検討中。</div>
+    </div>
+
+    <div class="min-h1">■ ⑩ 大阪府公立高校入試制度の変更に伴う説明会</div>
+    <div class="min-item">
+      <div class="min-item-body">・府の教育長が、要望があれば説明に来ると言っている。一方で、学校での説明会が予定されている、府全体のオンライン説明で足りる、といった意見があった。<span class="concl">▶ 結論：PTAに負担をかけてまで独自に開催はしない。動画などで中学生・保護者向けに案内する。</span></div>
+    </div>
+
+    <div class="min-h1">■ ⑪ にぎわいフェスタ（10/24・25）</div>
+    <div class="min-item">
+      <div class="min-item-body">・目標は<span class="d-del">×たこ焼き200枚</span>→<span class="d-fix">○たこせん1,200枚</span>・スマートボール800回（2日間）。雨なら売上が半分ほどになる可能性があり、台風が直撃すれば中止。出店料が5万円に上がった（昨年の約2倍）ので、赤字にならないように運営する。<br>
+      ・昼食は、1日通しで参加する人に現金で支給する。スポーツドリンクは一応用意するが、基本は配らない。<br>
+      ・子どもの手伝いもOK（作る作業は高学年以上）。前日10/23の17時から機材を搬入するので、来られる人は協力をお願いしたい。</div>
+    </div>
+
+    <div class="min-h1">■ ⑫ その他</div>
+    <div class="min-item">
+      <div class="min-item-body">・夢プロジェクト：春休みの企画を検討中。前回の勉強会の続編も候補にしている。意見を募集する。</div>
+    </div>
+
+    <div class="min-h1">■ 次回までにお願いしたいこと　<span class="d-move">↕ 51項目から7項目に集約</span></div>
+    <div class="min-item">
+      <div class="min-item-body">・フリスぺ募集チラシの必要部数をフォームで回答（各単P／10/30（金））<br>
+      ・にぎわいフェスタのシフトの可否を連絡、前日の搬入に協力（各自／10/23（金））<br>
+      ・みらい学園フェスタ防災ブースに参加できる時間を連絡（各単P／11/7（土）まで）<br>
+      ・三中フェスタのハンター役に申し込む（各単P／11/28（土）まで。フォームが出たら）<br>
+      ・環境フェスタのチラシを受け取り、各校で配布（各単P／11/11の会長会）<br>
+      ・12/18の懇親会の出欠を回答（各単P／後日案内）<br>
+      ・次年度役員の選出で困ったら市Pに相談（各単P／随時）</div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ プロモ→スライド -->
+<div class="sec">
+  <div class="promo-copy">
+    <h3>プラウドノートPROで作った議事録を<br>Claude等のAIに渡せば、こんな保護者向け概要に作り替えます ✦</h3>
+    <p>読みやすい・伝わる・共有しやすい。<br>今月のように元の議事録が使えなかった場合でも、整えた最終版をClaudeに渡して「配布用の概要版ビジュアル資料にして！」と言っていただくだけで、会議の内容が一瞬でビジュアル資料に変わります。</p>
+  </div>
+
+  <div class="slide-sec-label">↓ 第5回の議事録から、実際にこんな資料ができます</div>
+
+  <div class="slide-wrap">
+    <div class="slide-inner">
+      <div class="slide-kv">
+        <h2>第5回 会長会 ご報告</h2>
+        <p>2026年10月16日 ゆうゆうセンター３階研修室</p>
+        <div class="slide-date">PTA会長・副会長より保護者の皆さまへ</div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-title">決まったこと</div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text"><strong>防災キャンプなどの補助ルール</strong>が決定。5万円までは無条件で補助、超えた分は1/2補助（上限20万円）</div></div>
+          <div class="info-item"><div class="info-dot dot-green"></div><div class="info-text"><strong>環境フェスタ</strong>のチラシ配布に、各校で協力することが承認</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text"><strong>高校入試の説明会</strong>は市Pでは開催せず、動画などで案内</div></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title">お知らせ</div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text"><strong>次年度のPTA役員</strong>の募集が各校で始まっています。市Pも相談や資料づくりを支援</div></div>
+          <div class="info-item"><div class="info-dot dot-amber"></div><div class="info-text">放課後の見守り<strong>「フリスぺ安全ボランティア」</strong>の募集チラシを、市Pがまとめて発注</div></div>
+          <div class="info-item"><div class="info-dot dot-blue"></div><div class="info-text"><strong>夢プロジェクト</strong>は春休みの企画を検討中。ご意見を募集します</div></div>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">⛑️ みらい学園フェスタ 防災ブース</div>
+          <div class="event-date-badge">11月7日 11時〜15時</div>
+        </div>
+        <div class="event-desc">クイズラリーや保存食の試食で、遊びながら防災を学べるブースを出します。市Pも応援に入ります。</div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <div class="event-name">🕶️ 三中フェスタ「逃走中」</div>
+          <div class="event-date-badge">11月28日</div>
+        </div>
+        <div class="event-desc">子どもたちを追いかける<strong>ハンター役</strong>を募集します。午後の13時〜16時ごろで予定を空けておいてください。時間が決まり次第、フォームでご案内します。</div>
+      </div>
+
+      <div class="action-list">
+        <div class="action-title">皆さまへのお願い</div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">「逃走中」のハンター役にご協力いただける方は、各校PTAまでお声がけください（社会人が原則、高校生は保護者と一緒なら参加可）</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">みらい学園フェスタの防災ブースは、1時間だけの参加も大歓迎です</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">放課後の見守りボランティアに関心のある方は、各校PTAにお問い合わせください</div></div>
+        <div class="action-item"><div class="check-box"></div><div class="action-text">次年度のPTA役員の募集案内が届いたら、ぜひご検討ください</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ⑥ 締め -->
+<div class="closing">
+  <div class="closing-icon">🤝</div>
+  <h3>単Pの負担を、みんなで軽くしていきましょう</h3>
+  <p>今月は、録音から配布までをAIだけで完結させることができませんでした。うまくいかなかった点も記録に残すことで、単語登録や話者登録など、次回に効く改善点が見えてきます。<br><br>ツールを万能に見せず、使える場面と使えない場面を見極めながら、一緒に、もっとラクな運営のかたちを考えていきましょう！！</p>
+</div>
+
+</div>
+<script>
+function toggle(btn){
+  const body=btn.nextElementSibling;
+  const open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  btn.setAttribute('aria-expanded',String(!open));
+}
+</script>
+</body>
+</html>
